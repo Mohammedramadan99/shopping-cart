@@ -2,8 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import authRoute from "./routes/auth.route.js";
 
 const app = express();
+
 dotenv.config();
 
 // connect to mongodb
@@ -16,14 +18,28 @@ const connect = async () => {
     console.log(error);
   }
 };
+
+// The express.json() middleware function is used to parse incoming request bodies in JSON format. This function parses the JSON data in the request body and makes it available in req.body property of the Request object.
 app.use(express.json());
 
 // cookie-parser is used to set up and configure the Express application to handle cookies
 // i think we will need to use it soon
 app.use(cookieParser());
 
+// Routes
+app.use("/api/auth", authRoute);
+
+// Handling the errors
+app.use((err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || "Something went wrong!";
+
+  return res.status(errorStatus).send(errorMessage);
+});
+
 // run the server
-app.listen(8800, () => {
+const Port = process.env.PORT || 3001;
+app.listen(Port, () => {
   connect();
-  console.log("Backend server is running!");
+  console.log(`server is running on port ${Port}`);
 });
