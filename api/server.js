@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import authRoute from "./routes/auth.route.js";
+import cors from "cors";
 
 const app = express();
 
@@ -18,6 +19,7 @@ const connect = async () => {
     console.log(error);
   }
 };
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 // The express.json() middleware function is used to parse incoming request bodies in JSON format. This function parses the JSON data in the request body and makes it available in req.body property of the Request object.
 app.use(express.json());

@@ -8,7 +8,7 @@ export const register = async (req, res, next) => {
     const { email } = req.body;
     // find the user and checking it
     const user = await User.findOne({ email });
-    if (user) return next(createError(404, "email is already used!"));
+    if (user) return next(createError(403, "email is already used!"));
 
     // password encryption
     const hash = bcrypt.hashSync(req.body.password, 5);

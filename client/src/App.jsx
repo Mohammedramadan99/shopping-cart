@@ -1,7 +1,9 @@
-import Navbar from "../components/Navbar/Navbar";
-import Footer from "../components/Footer/Footer";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import Home from "../pages/home/Home";
+import Home from "./pages/home/Home";
+import Signup from "./pages/register/Signup";
+import Register from "./pages/register/Register";
 function App() {
   const Layout = () => {
     return (
@@ -20,6 +22,14 @@ function App() {
         {
           path: "/",
           element: <Home />,
+        },
+        {
+          path: "/sign-up",
+          element: <Signup />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
         },
       ],
     },
