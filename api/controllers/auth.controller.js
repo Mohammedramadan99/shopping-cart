@@ -57,6 +57,7 @@ export const login = async (req, res, next) => {
       lastName,
       email,
       idNumber,
+      token,
     };
     res
       .cookie("accessToken", token, {
@@ -77,4 +78,12 @@ export const logout = async (req, res) => {
     })
     .status(200)
     .send("User has been logged out.");
+};
+export const users = async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json({ users });
+  } catch (error) {
+    console.log(error);
+  }
 };

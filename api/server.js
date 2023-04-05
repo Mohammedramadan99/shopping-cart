@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import authRoute from "./routes/auth.route.js";
+import familyRoute from "./routes/family.route.js";
 import cors from "cors";
 
 const app = express();
@@ -30,6 +31,7 @@ app.use(cookieParser());
 
 // Routes
 app.use("/api/auth", authRoute);
+app.use("/api/family", familyRoute);
 
 // Handling the errors
 app.use((err, req, res, next) => {
