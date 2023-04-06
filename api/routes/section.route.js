@@ -3,11 +3,11 @@ import {
   createSection,
   getSection,
 } from "../controllers/section.controller.js";
-// import { loginValidate } from "../utils/validateUser.js";
+import { isAuth } from "../utils/Auth.js";
 
 const router = express.Router();
 
 router.post("/", createSection);
-router.get("/", getSection);
+router.get("/:id", isAuth, getSection);
 
 export default router;

@@ -13,8 +13,11 @@ export const createSection = async (req, res, next) => {
 
 export const getSection = async (req, res, next) => {
   try {
-    const sections = await Section.find();
-    res.json(sections);
+    const section = await Section.find({ familyId: req.params.id });
+    if (!section) {
+      return res.status(404).json({ error: "Section not found" });
+    }
+    res.json(section);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
