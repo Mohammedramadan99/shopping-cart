@@ -22,3 +22,12 @@ export const getSection = async (req, res, next) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const getSections = async (req, res) => {
+  try {
+    const sections = await Section.find({});
+    res.status(200).json(sections);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};

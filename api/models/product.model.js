@@ -5,12 +5,12 @@ const userSchema = new Schema(
   {
     productName: { type: String, required: true },
     price: {
-      type: String,
+      type: Number,
       required: true,
     },
     image: {
       type: String,
-      required: true,
+      // required: true,
     },
     sectionId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -23,4 +23,4 @@ const userSchema = new Schema(
   }
 );
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model("Product", userSchema);
