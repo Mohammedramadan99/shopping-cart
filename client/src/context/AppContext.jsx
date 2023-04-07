@@ -19,7 +19,7 @@ const AppContextProvider = ({ children }) => {
   const addFamily = (familyName, members) => {
     // Add new family to server
     axios
-      .post(`${URL}/api/families`, { familyName, members })
+      .post(`${URL}/api/family`, { familyName, members })
       .then((res) => setFamilies([...families, res.data]))
       .catch((err) => console.log(err));
   };
