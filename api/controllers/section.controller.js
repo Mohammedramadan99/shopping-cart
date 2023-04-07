@@ -1,4 +1,5 @@
 import Section from "../models/section.model.js";
+import Product from "../models/product.model.js";
 
 export const createSection = async (req, res, next) => {
   try {
@@ -23,6 +24,18 @@ export const getSection = async (req, res, next) => {
   }
 };
 
+export const getProducts = async (req, res) => {
+  try {
+    const products = await Product.find({
+      sectionId: req.params.sectionId,
+    });
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+// for testing
 export const getSections = async (req, res) => {
   try {
     const sections = await Section.find({});

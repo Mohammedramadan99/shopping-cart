@@ -1,4 +1,5 @@
 import Family from "../models/family.model.js";
+import Section from "../models/section.model.js";
 
 export const createFamily = async (req, res, next) => {
   try {
@@ -31,6 +32,14 @@ export const getFamilies = async (req, res) => {
     const families = await Family.find({});
 
     res.status(200).json(families);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+export const getSections = async (req, res) => {
+  try {
+    const sections = await Section.find({ familyId: req.params.familyId });
+    res.status(200).json(sections);
   } catch (error) {
     res.status(500).json(error);
   }
