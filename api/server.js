@@ -6,6 +6,8 @@ import authRoute from "./routes/auth.route.js";
 import familyRoute from "./routes/family.route.js";
 import sectionRoute from "./routes/section.route.js";
 import productRoute from "./routes/product.route.js";
+import cartRoute from "./routes/cart.route.js";
+
 import cors from "cors";
 
 const app = express();
@@ -22,6 +24,7 @@ const connect = async () => {
     console.log(error);
   }
 };
+
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 // The express.json() middleware function is used to parse incoming request bodies in JSON format. This function parses the JSON data in the request body and makes it available in req.body property of the Request object.
@@ -36,6 +39,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/family", familyRoute);
 app.use("/api/section", sectionRoute);
 app.use("/api/products", productRoute);
+app.use("/api/cart", cartRoute);
 
 // Handling the errors
 app.use((err, req, res, next) => {

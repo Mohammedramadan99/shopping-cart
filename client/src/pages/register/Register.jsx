@@ -18,6 +18,7 @@ function Register() {
     e.preventDefault();
     // Send the POST request to the backend
     try {
+      // axios.put(url,body)
       const { data } = await axios.post(
         "http://localhost:3001/api/auth/register",
         user

@@ -44,3 +44,54 @@ export const getSections = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+export const addToCart = async (req, res) => {
+  const { familyId, productId } = req.params;
+  const { quantity } = req.body;
+  try {
+    const family = await Family.findById(familyId).populate("cart.product");
+    if (!family) {
+      return res.status(400).json({ message: "Family not found" });
+    }
+
+    const existingCartItemIndex = family.cart.findIndex(
+      (item) => item.product._id.toString() === productId
+    );
+    if (existingCartItemIndex !== -1) {
+      family.cart[existingCartItemIndex].quantity += quantity || 1;
+    } else {
+      family.cart.push({ product: productId, quantity: quantity || 1 });
+    }
+
+    await family.save();
+    res.status(200).json(family);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const removeFromCart = async (req, res) => {
+  const { productId, familyId } = req.params;
+
+  try {
+    const family = await Family.findById(familyId).populate("cart.product");
+    if (!family) {
+      return res.status(400).json({ message: "Family not found" });
+    }
+
+    const existingCartItemIndex = family.cart.findIndex(
+      (item) => item.product._id.toString() === productId
+    );
+    if (existingCartItemIndex === -1) {
+      return res.status(400).json({ message: "Product not in cart" });
+    }
+
+    family.cart.splice(existingCartItemIndex, 1);
+    await family.save();
+    res.status(200).json(family);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
