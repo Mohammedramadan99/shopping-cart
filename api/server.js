@@ -25,7 +25,7 @@ const connect = async () => {
   }
 };
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "http://localhost:5173" }));
 
 // The express.json() middleware function is used to parse incoming request bodies in JSON format. This function parses the JSON data in the request body and makes it available in req.body property of the Request object.
 app.use(express.json());
@@ -46,7 +46,7 @@ app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
   const errorMessage = err.message || "Something went wrong!";
 
-  return res.status(errorStatus).send(errorMessage);
+  return res.status(errorStatus).json({ errorMessage });
 });
 
 // run the server

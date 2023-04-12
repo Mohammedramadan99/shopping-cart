@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
-function SignUp() {
+import "./Auth.scss";
+import { AuthContext } from "../../context/AuthContext";
+
+function Login({ setShowNav }) {
+  setShowNav(true);
   const [file, setFile] = useState(null);
   const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
-    img: "",
   });
+  const { login, error, message } = useContext(AuthContext);
+
   const handleChange = (e) => {
     setUser((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
@@ -17,20 +20,13 @@ function SignUp() {
   const submitHandler = async (e) => {
     e.preventDefault();
     // Send the POST request to the backend
-    try {
-      const { data } = await axios.post(
-        "http://localhost:3001/api/auth/login",
-        user
-      );
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+    login(user);
   };
   return (
-    <div className="SignUp">
+    <div className="login">
       <div className="container">
         <form className="form" onSubmit={submitHandler}>
+          {message}
           <div className="item">
             <label>email</label>
             <input
@@ -49,11 +45,11 @@ function SignUp() {
               onChange={handleChange}
             />
           </div>
-          <input type="submit" />
+          <input type="submit" className="submit" />
         </form>
       </div>
     </div>
   );
 }
 
-export default SignUp;
+export default Login;

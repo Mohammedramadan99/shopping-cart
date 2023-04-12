@@ -1,0 +1,54 @@
+@import "../../Globals.scss";
+.login,
+.register {
+  background-color: lighten(#000000, 10%);
+  height: 90vh;
+  padding: 50px 0;
+
+  .container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .form {
+      max-width: 500px;
+      width: 100%;
+      background-color: #fff;
+      padding: 30px;
+      .item {
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        label {
+          text-transform: capitalize;
+        }
+        input {
+          padding: 10px;
+          border: none;
+          background-color: lighten(#ddd, 7%);
+          color: #000;
+          border-top-right-radius: 20px;
+          border-bottom-right-radius: 20px;
+          &::placeholder {
+            color: #999;
+          }
+        }
+      }
+      .submit {
+        border: none;
+        border-bottom: 2px solid $primary_color;
+        background-color: transparent;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: $main_speed;
+
+        &:hover {
+          background-color: $primary_color;
+          border-color: transparent;
+          color: #fff;
+        }
+      }
+    }
+  }
+}

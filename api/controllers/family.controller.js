@@ -4,9 +4,15 @@ import Section from "../models/section.model.js";
 export const createFamily = async (req, res, next) => {
   try {
     const { parent, familyName, members } = req.body;
-    const family = new Family({ parent, familyName, members });
-    await family.save();
-    res.status(201).json(family);
+    const family = await Family.findOne({ parent });
+    console.log({ family });
+    if (family) {
+      res.status(403).json("you already have a family");
+    } else {
+      const createFamily = new Family({ parent, familyName, members });
+      await createFamily.save();
+      res.status(201).json(createFamily);
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -15,10 +21,8 @@ export const createFamily = async (req, res, next) => {
 export const getFamily = async (req, res) => {
   try {
     const parent = req.user; // Assuming the parent user is authenticated
-    console.log({ parent });
-    const id = "642cba9ad2b112cd8df7c8bb";
     console.log(parent);
-    const family = await Family.findOne({ parent });
+    const family = await Family.findOne({ parent }).populate("cart.product");
     if (!family) {
       return res.status(404).json({ error: "Family not found" });
     }
@@ -29,7 +33,7 @@ export const getFamily = async (req, res) => {
 };
 export const getFamilies = async (req, res) => {
   try {
-    const families = await Family.find({});
+    const families = await Family.find({}).populate("cart.product");
 
     res.status(200).json(families);
   } catch (error) {

@@ -8,7 +8,11 @@ export const register = async (req, res, next) => {
     const { email } = req.body;
     // find the user and checking it
     const user = await User.findOne({ email });
-    if (user) return next(createError(403, "email is already used!"));
+    if (user) {
+      return res.status(403).json({
+        message: "email is used, choose another one.",
+      });
+    }
 
     // password encryption
     const hash = bcrypt.hashSync(req.body.password, 5);
@@ -21,7 +25,9 @@ export const register = async (req, res, next) => {
 
     await newUser.save();
 
-    res.status(201).send("User has been created.");
+    res.status(201).json({
+      message: "User has been created.",
+    });
   } catch (err) {
     next(err);
   }
@@ -40,7 +46,10 @@ export const login = async (req, res, next) => {
     // comparing the password
     const isCorrect = bcrypt.compareSync(req.body.password, user.password);
     if (!isCorrect)
-      return next(createError(400, "Wrong password or username!"));
+      return res.status(403).json({
+        message: "Wrong password or username!",
+      });
+
     console.log({ user });
 
     // create the token

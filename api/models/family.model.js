@@ -1,16 +1,6 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const cartSchema = new mongoose.Schema({
-  products: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-      required: true,
-    },
-  ],
-});
-
 const familySchema = new Schema(
   {
     parent: {
@@ -40,6 +30,10 @@ const familySchema = new Schema(
         quantity: { type: Number, required: true },
       },
     ],
+    familyName: {
+      type: String,
+      require: true,
+    },
   },
   {
     timestamps: true,

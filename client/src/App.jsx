@@ -1,16 +1,20 @@
 import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Home from "./pages/home/Home";
-import Signup from "./pages/register/Signup";
-import Register from "./pages/register/Register";
+
+import Register from "./pages/auth/Register";
+import { useState } from "react";
+import Login from "./pages/auth/Login";
+import Profile from "./pages/profile/Profile";
+import CreateFamily from "./pages/createFamily/CreateFamily";
 function App() {
+  const [showNav, setShowNav] = useState(true);
+  const [showFooter, setShowFooter] = useState(true);
   const Layout = () => {
     return (
       <div className="app">
-        <Navbar />
+        {showNav && <Navbar />}
         <Outlet />
-        <Footer />
       </div>
     );
   };
@@ -21,15 +25,46 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Home />,
+          element: (
+            <>
+              <Home setShowNav={setShowNav} setShowFooter={setShowFooter} />
+            </>
+          ),
         },
         {
-          path: "/sign-up",
-          element: <Signup />,
+          path: "/login",
+          element: (
+            <>
+              <Login setShowNav={setShowNav} setShowFooter={setShowFooter} />
+            </>
+          ),
         },
         {
           path: "/register",
-          element: <Register />,
+          element: (
+            <>
+              <Register setShowNav={setShowNav} setShowFooter={setShowFooter} />
+            </>
+          ),
+        },
+        {
+          path: "/profile",
+          element: (
+            <>
+              <Profile />
+            </>
+          ),
+        },
+        {
+          path: "/family/create",
+          element: (
+            <>
+              <CreateFamily
+                setShowNav={setShowNav}
+                setShowFooter={setShowFooter}
+              />
+            </>
+          ),
         },
       ],
     },

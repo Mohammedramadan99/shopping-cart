@@ -1,0 +1,43 @@
+@import "../../Globals.scss";
+
+.navbar {
+  padding: 20px 0;
+  box-shadow: 0 0 15px 5px #f1f1f1;
+  height: 10vh;
+
+  .container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    .links {
+      display: flex;
+      //   align-items: flex-start;
+      gap: 20px;
+      .link {
+        text-transform: capitalize;
+        position: relative;
+        opacity: 0.9;
+        font-size: 20px;
+        font-weight: 300;
+        transition: $main_speed;
+        &::before {
+          content: "";
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background-color: $primary_color;
+          transition: $main_speed;
+        }
+        &:hover {
+          opacity: 1;
+          &::before {
+            width: 100%;
+          }
+        }
+        // margin-left: 20px;
+      }
+    }
+  }
+}

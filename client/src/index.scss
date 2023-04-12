@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: poppins;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+input {
+  outline: none;
+}
+
+.page {
+  padding: 20px 0;
+}

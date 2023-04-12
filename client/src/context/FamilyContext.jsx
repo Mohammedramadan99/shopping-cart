@@ -1,9 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
-export const AppContext = createContext();
+export const FamilyContext = createContext();
 const URL = "http://localhost:3001";
-const AppContextProvider = ({ children }) => {
+const FamilyContextProvider = ({ children }) => {
   const [families, setFamilies] = useState([]);
   const [sections, setSections] = useState([]);
   const [products, setProducts] = useState([]);
@@ -49,7 +49,9 @@ const AppContextProvider = ({ children }) => {
     addProduct,
   };
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+  return (
+    <FamilyContext.Provider value={value}>{children}</FamilyContext.Provider>
+  );
 };
 
-export default AppContextProvider;
+export default FamilyContextProvider;

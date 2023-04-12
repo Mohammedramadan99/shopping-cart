@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
-function Register() {
+import "./Auth.scss";
+import { AuthContext } from "../../context/AuthContext";
+
+function Register({ setShowNav }) {
+  setShowNav(true);
   const [file, setFile] = useState(null);
   const [user, setUser] = useState({
     firstName: "",
@@ -9,6 +13,8 @@ function Register() {
     password: "",
     img: "",
   });
+  const { register, error, message } = useContext(AuthContext);
+
   const handleChange = (e) => {
     setUser((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
@@ -19,11 +25,12 @@ function Register() {
     // Send the POST request to the backend
     try {
       // axios.put(url,body)
-      const { data } = await axios.post(
-        "http://localhost:3001/api/auth/register",
-        user
-      );
-      console.log(data);
+      // const { data } = await axios.post(
+      //   "http://localhost:3001/api/auth/register",
+      //   user
+      // );
+      // console.log(data);
+      register(user);
     } catch (error) {
       console.log(error);
     }
@@ -32,6 +39,8 @@ function Register() {
     <div className="register">
       <div className="container">
         <form className="form" onSubmit={submitHandler}>
+          {error && error}
+          {message && message}
           <div className="item">
             <label>first name</label>
             <input
@@ -68,7 +77,7 @@ function Register() {
               onChange={handleChange}
             />
           </div>
-          <input type="submit" />
+          <input type="submit" className="submit" />
         </form>
       </div>
     </div>
