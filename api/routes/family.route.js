@@ -6,12 +6,14 @@ import {
   getSections,
   addToCart,
   removeFromCart,
+  addMember,
 } from "../controllers/family.controller.js";
 
 import { isAuth } from "../utils/Auth.js";
 const router = express.Router();
 
 router.post("/", createFamily);
+router.post("/member/:familyId", isAuth, addMember);
 
 // add to cart
 router.post("/:familyId/:productId", isAuth, addToCart);

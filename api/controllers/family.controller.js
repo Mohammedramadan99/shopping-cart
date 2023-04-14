@@ -40,6 +40,34 @@ export const getFamilies = async (req, res) => {
     res.status(500).json(error);
   }
 };
+export const addMember = async (req, res) => {
+  const { familyId } = req.params;
+  const { idNumber, email } = req.body;
+  try {
+    const family = await Family.findById(familyId);
+    if (!family) {
+      return res.status(400).json({ message: "Family not found" });
+    }
+
+    // Check if the member already exists in the family
+    const existingMember = family.members.find(
+      (member) => member.idNumber === idNumber || member.email === email
+    );
+    if (existingMember) {
+      return res
+        .status(400)
+        .json({ message: "Member already exists in the family" });
+    }
+
+    // Add the new member to the family
+    family.members.push({ idNumber, email });
+    await family.save();
+    res.status(200).json(family);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error });
+  }
+};
 export const getSections = async (req, res) => {
   try {
     const sections = await Section.find({ familyId: req.params.familyId });

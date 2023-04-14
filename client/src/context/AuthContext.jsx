@@ -13,6 +13,7 @@ const AuthContextProvider = ({ children }) => {
   const [error, setError] = useState("");
   const [family, setFamily] = useState({});
   const [sections, setSections] = useState([]);
+  const [section, setSection] = useState({});
   const [products, setProducts] = useState([]);
 
   // useEffect(() => {
@@ -91,7 +92,7 @@ const AuthContextProvider = ({ children }) => {
         console.log(error.message);
       });
   };
-  const getFamily = (familyData) => {
+  const getFamily = () => {
     // Add new family to server
 
     // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
@@ -112,9 +113,119 @@ const AuthContextProvider = ({ children }) => {
         console.log(error.message);
       });
   };
+  const addMember = (data) => {
+    // Add new family to server
+
+    // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
+
+    axios
+      .post(`${URL}/api/family/member/${data.familyId}`, data.memberInfo, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setFamily(res?.data?.family);
+        setError("");
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+        console.log(error.message);
+      });
+  };
+
+  // ------------------ Section -----------------
+  const createSection = (sectionData) => {
+    // Add new family to server
+
+    // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
+
+    axios
+      .post(`${URL}/api/sections`, { ...sectionData })
+      .then((res) => {
+        console.log(res.data);
+        message("section created");
+        setError("");
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+        setMessage("");
+        console.log(error.message);
+      });
+  };
+  const getSection = (sectionId) => {
+    // Add new family to server
+
+    // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
+
+    axios
+      .get(`${URL}/api/sections/section/${sectionId}`, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setSection(res?.data);
+        setError("");
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+        console.log(error.message);
+      });
+  };
+  const getFamilySections = (familyId) => {
+    // Add new family to server
+
+    // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
+
+    axios
+      .get(`${URL}/api/sections/${familyId}`, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setSections(res?.data);
+        setError("");
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+        console.log(error.message);
+      });
+  };
+
+  // ------------------ Products -----------------
+  const getProducts = (sectionId) => {
+    // Add new family to server
+
+    // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
+
+    axios
+      .get(`${URL}/api/sections/${sectionId}/products`, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setProducts(res?.data);
+        setError("");
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+        console.log(error.message);
+      });
+  };
+
   const value = {
     user,
     family,
+    sections,
+    section,
+    products,
     message,
     error,
     register,
@@ -122,6 +233,11 @@ const AuthContextProvider = ({ children }) => {
     logout,
     createFamily,
     getFamily,
+    createSection,
+    getFamilySections,
+    getSection,
+    getProducts,
+    addMember,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

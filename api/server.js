@@ -37,7 +37,7 @@ app.use(cookieParser());
 // Routes
 app.use("/api/auth", authRoute);
 app.use("/api/family", familyRoute);
-app.use("/api/section", sectionRoute);
+app.use("/api/sections", sectionRoute);
 app.use("/api/products", productRoute);
 app.use("/api/cart", cartRoute);
 

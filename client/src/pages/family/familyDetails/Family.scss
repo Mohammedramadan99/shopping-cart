@@ -1,0 +1,87 @@
+@import "../../../Globals.scss";
+$box-padding: 20px;
+.family {
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 20px;
+    .members_box,
+    .rooms_box {
+      flex: 1;
+      background-color: #f4f4f4;
+      //   border: 2px solid $primary_color;
+      //   padding: 20px;
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #fff;
+        background-color: $secondary_color;
+        border-bottom: 3px solid #fff;
+        padding: $box-padding;
+        .add {
+          font-size: 20px;
+          border: 1px solid;
+          padding: 10px;
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+        }
+        .title {
+          text-transform: capitalize;
+          font-size: 25px;
+          font-weight: bold;
+        }
+      }
+    }
+    .members_box {
+      .members {
+        // padding: $box-padding;
+        .member {
+          padding: 20px;
+          transition: $main_speed;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          .email {
+            font-weight: 700;
+            color: #666;
+          }
+          .idNumber {
+            color: #999;
+          }
+          &:hover {
+            background-color: #fff;
+          }
+        }
+      }
+    }
+    .rooms_box {
+      .rooms {
+        transition: $main_speed;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-direction: column;
+        .room {
+          width: 100%;
+          padding: 20px;
+          transition: $main_speed;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-weight: 700;
+          color: #666;
+          &:hover {
+            background-color: #fff;
+          }
+        }
+      }
+    }
+  }
+}

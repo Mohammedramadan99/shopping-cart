@@ -6,7 +6,13 @@ import Register from "./pages/auth/Register";
 import { useState } from "react";
 import Login from "./pages/auth/Login";
 import Profile from "./pages/profile/Profile";
-import CreateFamily from "./pages/createFamily/CreateFamily";
+import CreateFamily from "./pages/family/createFamily/CreateFamily";
+import CreateSection from "./pages/sections/createSection/CreateSection";
+import Family from "./pages/family/familyDetails/Family";
+import SectionDetails from "./pages/sections/sectionDetails/SectionDetails";
+import Sections from "./pages/sections/sections/Sections";
+import AddMember from "./pages/family/addMember/AddMember";
+
 function App() {
   const [showNav, setShowNav] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
@@ -66,11 +72,64 @@ function App() {
             </>
           ),
         },
+        {
+          path: "/family/member",
+          element: (
+            <>
+              <AddMember
+                setShowNav={setShowNav}
+                setShowFooter={setShowFooter}
+              />
+            </>
+          ),
+        },
+        {
+          path: "/section/create",
+          element: (
+            <>
+              <CreateSection
+                setShowNav={setShowNav}
+                setShowFooter={setShowFooter}
+              />
+            </>
+          ),
+        },
+        {
+          path: "/section/:id",
+          element: (
+            <>
+              <SectionDetails
+                setShowNav={setShowNav}
+                setShowFooter={setShowFooter}
+              />
+            </>
+          ),
+        },
+        {
+          path: "/family",
+          element: (
+            <>
+              <Family setShowNav={setShowNav} setShowFooter={setShowFooter} />
+            </>
+          ),
+        },
+        {
+          path: "/sections",
+          element: (
+            <>
+              <Sections setShowNav={setShowNav} setShowFooter={setShowFooter} />
+            </>
+          ),
+        },
       ],
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
 export default App;
