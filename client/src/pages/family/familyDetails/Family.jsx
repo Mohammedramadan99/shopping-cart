@@ -14,8 +14,8 @@ function Family({ setShowNav }) {
     sections,
     user,
   } = useContext(AuthContext);
+  getFamily();
   useEffect(() => {
-    getFamily();
     if (user?.token) {
       getFamilySections(family?._id);
     }

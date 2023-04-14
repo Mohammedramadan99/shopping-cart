@@ -126,7 +126,7 @@ const AuthContextProvider = ({ children }) => {
       })
       .then((res) => {
         console.log(res.data);
-        setFamily(res?.data?.family);
+        setMessage("member added");
         setError("");
       })
       .catch((error) => {
