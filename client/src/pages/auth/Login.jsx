@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Auth.scss";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Login({ setShowNav }) {
   let navigate = useNavigate();
@@ -12,7 +13,13 @@ function Login({ setShowNav }) {
     email: "",
     password: "",
   });
-  const { login, error, message, user: userInfo } = useContext(AuthContext);
+  const {
+    login,
+    error,
+    message,
+    user: userInfo,
+    reset,
+  } = useContext(AuthContext);
   console.log({ userInfo });
   const handleChange = (e) => {
     setUser((prev) => {
@@ -29,6 +36,16 @@ function Login({ setShowNav }) {
       navigate("/");
     }
   }, [userInfo?.token]);
+  useEffect(() => {
+    if (message) {
+      toast.success(message);
+      reset();
+    }
+    if (error) {
+      toast.error(error);
+      reset();
+    }
+  }, [message, error, toast]);
 
   return (
     <div className="login">

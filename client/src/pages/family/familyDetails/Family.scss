@@ -87,3 +87,13 @@ $box-padding: 20px;
     }
   }
 }
+
+.note {
+  width: 100%;
+  color: $primary_color;
+  font-weight: 600;
+  text-transform: capitalize;
+  font-size: 12px;
+  padding: 20px;
+  background-color: #fff;
+}

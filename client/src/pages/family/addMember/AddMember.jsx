@@ -1,13 +1,30 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./AddMember.scss";
 import { AuthContext } from "../../../context/AuthContext";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 function AddMember() {
-  const { user, getFamily, family, addMember } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { user, getFamily, family, addMember, error, reset, message } =
+    useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [idNumber, setIdNumber] = useState("");
   useEffect(() => {
     getFamily();
   }, []);
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      reset();
+    }
+    if (message) {
+      setEmail("");
+      setIdNumber("");
+      toast.success(message);
+      reset();
+    }
+  }, [error, message]);
+
   const submitHandler = (e) => {
     e.preventDefault();
     const data = {
@@ -26,6 +43,7 @@ function AddMember() {
         <div className="item">
           <input
             type="text"
+            value={email}
             placeholder="email"
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -33,11 +51,12 @@ function AddMember() {
         <div className="item">
           <input
             type="text"
+            value={idNumber}
             placeholder="id number"
             onChange={(e) => setIdNumber(e.target.value)}
           />
         </div>
-        <input type="submit" />
+        <input type="submit" className="main-btn submit" />
       </form>
     </div>
   );

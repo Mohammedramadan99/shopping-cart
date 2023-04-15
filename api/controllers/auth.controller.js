@@ -2,10 +2,10 @@ import User from "../models/user.model.js";
 import createError from "../utils/createError.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
+import cloudinary from "cloudinary";
 export const register = async (req, res, next) => {
   try {
-    const { email } = req.body;
+    const { email, image } = req.body;
     // find the user and checking it
     const user = await User.findOne({ email });
     if (user) {
@@ -17,6 +17,21 @@ export const register = async (req, res, next) => {
     // password encryption
     const hash = bcrypt.hashSync(req.body.password, 5);
 
+    if (image !== "") {
+      // Upload image to Cloudinary
+      const cloudinaryResult = await cloudinary.v2.uploader.upload(image, {
+        folder: "users",
+      });
+      const newUser = new User({
+        ...req.body,
+        password: hash,
+        image: cloudinaryResult.secure_url,
+      });
+      await newUser.save();
+      return res.status(201).json({
+        message: "User has been created.",
+      });
+    }
     // create a new user
     const newUser = new User({
       ...req.body,

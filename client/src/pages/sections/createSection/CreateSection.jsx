@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../context/AuthContext";
+import { toast } from "react-toastify";
 
 function CreateSection() {
-  const { user, getFamily, family, createSection } = useContext(AuthContext);
+  const { user, getFamily, family, createSection, message, error, reset } =
+    useContext(AuthContext);
   const [roomName, setRoomName] = useState("");
   useEffect(() => {
     getFamily();
@@ -16,7 +18,18 @@ function CreateSection() {
     console.log(sectionData);
     createSection(sectionData);
   };
-  // const product = { productName, sectionId, price };
+  useEffect(() => {
+    if (message) {
+      toast.success(message);
+      setRoomName("");
+      reset();
+    }
+    if (error) {
+      toast.error(error);
+      reset();
+    }
+  }, [message, error]);
+
   return (
     <div className="craeteSection page">
       <form onSubmit={submitHandler}>
@@ -24,10 +37,11 @@ function CreateSection() {
           <input
             type="text"
             placeholder="room name"
+            value={roomName}
             onChange={(e) => setRoomName(e.target.value)}
           />
         </div>
-        <input type="submit" />
+        <input type="submit" value="add" className="main-btn submit" />
       </form>
     </div>
   );

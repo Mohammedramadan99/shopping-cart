@@ -8,6 +8,7 @@ import {
   removeFromCart,
   addMember,
   removeMember,
+  removeFamily,
 } from "../controllers/family.controller.js";
 
 import { isAuth } from "../utils/Auth.js";
@@ -23,6 +24,7 @@ router.delete("/:familyId/:productId", isAuth, removeFromCart);
 // add to cart
 router.get("/:familyId/:productId", isAuth, addToCart);
 router.get("/", isAuth, getFamily);
+router.delete("/", isAuth, removeFamily);
 router.get("/:familyId/sections", getSections);
 
 export default router;

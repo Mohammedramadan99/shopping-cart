@@ -12,7 +12,11 @@ function Home({ setShowNav, setShowFooter }) {
   return (
     <div className="home">
       <div className="container">
-        {user?.token && <div className="user">Hi, {user?.firstName} </div>}
+        {user?.token && (
+          <div className="user">
+            Hi, <span>{user?.firstName}</span>{" "}
+          </div>
+        )}
 
         <div className="links">
           <div className="link">
@@ -24,12 +28,7 @@ function Home({ setShowNav, setShowFooter }) {
           <div className="link">
             <Link to={"/cart"}>cart</Link>
           </div>
-          <div className="link">
-            <Link to={"/sections"}>sections</Link>
-          </div>
-          <div className="link">
-            <Link to={"/products"}>products</Link>
-          </div>
+
           {user?.token ? (
             <div
               className="link"

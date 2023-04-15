@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
 import "./SectionDetails.scss";
 import { FaTrash, FaCartPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
 function SectionDetails() {
+  const navigate = useNavigate();
   const {
     user,
     section,
@@ -14,6 +15,7 @@ function SectionDetails() {
     getFamily,
     family,
     removeProduct,
+    removerSection,
     addToCart,
     message,
     reset,
@@ -39,6 +41,7 @@ function SectionDetails() {
   useEffect(() => {
     if (message) {
       toast.success(message);
+      navigate("/");
     }
     reset();
   }, [message]);
@@ -48,12 +51,20 @@ function SectionDetails() {
       <div className="container">
         <div className="header">
           <div className="sectionName">{section?.sectionName}</div>
-          <Link
-            to={`/section/${section?._id}/product/create`}
-            className="main-btn"
-          >
-            add product
-          </Link>
+          <div className="control">
+            <Link
+              to={`/section/${section?._id}/product/create`}
+              className="main-btn"
+            >
+              add product
+            </Link>
+            <div
+              className="main-btn"
+              onClick={() => removerSection(section?._id)}
+            >
+              <FaTrash />
+            </div>
+          </div>
         </div>
         <h3>{section?.sectionName}'s porducts</h3>
         <div className={`products ${products.length < 3 ? "fixed-width" : ""}`}>

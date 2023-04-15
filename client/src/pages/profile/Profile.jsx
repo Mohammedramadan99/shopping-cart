@@ -47,7 +47,7 @@ function Profile({ setShowNav }) {
         </div>
         <div className="family">
           <div className="head">your family</div>
-          {family ? (
+          {family?._id ? (
             <>
               <div className="famName">{family?.familyName}</div>
               <div className="members">

@@ -15,6 +15,7 @@ function Family({ setShowNav }) {
     sections,
     user,
     message,
+    error,
     reset,
     removeMember,
   } = useContext(AuthContext);
@@ -31,10 +32,20 @@ function Family({ setShowNav }) {
       getSection(family?._id);
     }
   }, [family._id, user.token, products]);
+  useEffect(() => {
+    if (message) {
+      toast.success(message);
+      reset();
+    }
+    if (error) {
+      toast.error(error);
+      reset();
+    }
+  }, [message, error]);
 
   const removeHandler = (memberId) => {
     const ids = {
-      familyId: family._id,
+      familyId: family?._id,
       memberId,
     };
     removeMember(ids);
@@ -51,22 +62,26 @@ function Family({ setShowNav }) {
               </Link>
             </div>
             <div className="members">
-              {family?.members?.map((member) => (
-                <div className="member" key={member?._id}>
-                  <div className="info">
-                    <div className="email">{member.email}</div>
-                    <div className="idNumber"> {member.idNumber} </div>
-                  </div>
-                  <div className="control">
-                    <div
-                      className="trash"
-                      onClick={() => removeHandler(member._id)}
-                    >
-                      <FaTrash />
+              {family?.members?.length > 0 ? (
+                family?.members?.map((member) => (
+                  <div className="member" key={member?._id}>
+                    <div className="info">
+                      <div className="email">{member.email}</div>
+                      <div className="idNumber"> {member.idNumber} </div>
+                    </div>
+                    <div className="control">
+                      <div
+                        className="trash"
+                        onClick={() => removeHandler(member._id)}
+                      >
+                        <FaTrash />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <div className="note">family has no members</div>
+              )}
             </div>
           </div>
           <div className="rooms_box">
@@ -77,11 +92,15 @@ function Family({ setShowNav }) {
               </Link>
             </div>
             <div className="rooms">
-              {sections.map((sec) => (
-                <Link to={`/section/${sec?._id}`} className="room">
-                  <div className="name">{sec.sectionName}</div>
-                </Link>
-              ))}
+              {sections?.length > 0 ? (
+                sections?.map((sec) => (
+                  <Link to={`/section/${sec?._id}`} className="room">
+                    <div className="name">{sec?.sectionName}</div>
+                  </Link>
+                ))
+              ) : (
+                <div className="note">family has no rooms</div>
+              )}
             </div>
           </div>
         </div>

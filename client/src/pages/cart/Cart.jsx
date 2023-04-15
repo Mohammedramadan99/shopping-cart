@@ -29,61 +29,17 @@ function Cart() {
   }, [message]);
 
   console.log({ family });
-  //   return (
-  //     <div className="page cart">
-  //       <div className="container">
-  //         <div className="header">cart</div>
-  //         <div className="products">
-  //           {family &&
-  //             family?.cart?.map((p) => {
-  //               const { _id, productName, price, image } = p?.product;
-  //               return (
-  //                 <div className="product">
-  //                   {image !== "" ? (
-  //                     <div className="img">
-  //                       <img src={image} alt="img" />
-  //                     </div>
-  //                   ) : (
-  //                     <div className="img-frame">img</div>
-  //                   )}
-  //                   <div className="details">
-  //                     <div className="name">{productName}</div>
-  //                     <div className="price">{price}$</div>
-  //                     <div
-  //                       className="remove"
-  //                       onClick={() =>
-  //                         removeFromCart({
-  //                           familyId: family?._id,
-  //                           productId: _id,
-  //                         })
-  //                       }
-  //                     >
-  //                       <FaTrash />
-  //                     </div>
-  //                   </div>
-  //                 </div>
-  //               );
-  //             })}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
+
   return (
     <div className="page section">
       <div className="container">
         <div className="header">
           <div className="sectionName">cart</div>
-          <Link
-            to={`/section/${section?._id}/product/create`}
-            className="main-btn"
-          >
-            add product
-          </Link>
         </div>
-        <h3>{family?.familyName}'s porducts</h3>
+        <h3>{family?.familyName}'s cart</h3>
         <div className={`products ${products.length < 3 ? "fixed-width" : ""}`}>
-          {family &&
-            family.cart.map((p) => {
+          {family?.cart &&
+            family?.cart?.map((p) => {
               const { _id, productName, price, image } = p?.product;
               return (
                 <div className="product" key={p?._id}>
@@ -116,7 +72,7 @@ function Cart() {
                 </div>
               );
             })}
-          {family?.cart.length < 1 && (
+          {family?.cart?.length < 1 && (
             <div className="note">your cart is empty</div>
           )}
         </div>

@@ -37,7 +37,6 @@ const userSchema = new Schema(
     family: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Family",
-      required: true,
     },
     idNumber: {
       type: String,

@@ -23,16 +23,37 @@ export const getFamily = async (req, res) => {
   try {
     const parent = req.user; // Assuming the parent user is authenticated
     console.log(parent);
+    // const family = await Family.findOne({ parent }).populate("cart.product");
     const family = await Family.findOne({ parent }).populate("cart.product");
 
     if (!family) {
       const user = await User.findOne({ parent }).populate("family");
+      const familyId = user.family._id;
+      const family = await Family.findOne({ familyId }).populate(
+        "cart.product"
+      );
       if (!user) return res.status(404).json({ error: "Family not found" });
 
-      res.status(200).json({ family: user.family });
+      res.status(200).json({ family });
       return;
     }
     res.status(200).json({ family });
+    return;
+  } catch (error) {
+    res.status(500).json(error);
+    return;
+  }
+};
+export const removeFamily = async (req, res) => {
+  try {
+    const parent = req.user; // Assuming the parent user is authenticated
+    console.log(parent);
+    // const family = await Family.findOne({ parent }).populate("cart.product");
+    const family = await Family.findOneAndDelete({ parent });
+    if (!family) {
+      return res.status(404).json({ error: "Family not found" });
+    }
+    res.status(200).json({ message: "family deleted" });
     return;
   } catch (error) {
     res.status(500).json(error);

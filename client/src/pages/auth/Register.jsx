@@ -1,9 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import "./Auth.scss";
 import { AuthContext } from "../../context/AuthContext";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Register({ setShowNav }) {
+  const navigate = useNavigate();
   setShowNav(true);
   const [file, setFile] = useState(null);
   const [user, setUser] = useState({
@@ -11,9 +14,8 @@ function Register({ setShowNav }) {
     lastName: "",
     email: "",
     password: "",
-    img: "",
   });
-  const { register, error, message } = useContext(AuthContext);
+  const { register, error, message, reset } = useContext(AuthContext);
   const [image, setImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
 
@@ -87,12 +89,22 @@ function Register({ setShowNav }) {
 
     reader.readAsDataURL(file);
   };
+  useEffect(() => {
+    if (message) {
+      // toast.success(message);
+      reset();
+      navigate("/login");
+    }
+    if (error) {
+      toast.error(error);
+      reset();
+    }
+  }, [message, error]);
+
   return (
     <div className="register">
       <div className="container">
         <form className="form" onSubmit={submitHandler}>
-          {error && error}
-          {message && message}
           <div className="item">
             <label>first name</label>
             <input
@@ -132,7 +144,7 @@ function Register({ setShowNav }) {
           <div className="item">
             <input type="file" onChange={handleImageChange} accept="image/*" />
             <div className="previewImg">
-              <img src={imagePreview} alt="img" />
+              <img src={imagePreview} width={100} height={100} alt="img" />
             </div>
           </div>
           <input type="submit" className="submit" />

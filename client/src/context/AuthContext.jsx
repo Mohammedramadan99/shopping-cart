@@ -38,7 +38,7 @@ const AuthContextProvider = ({ children }) => {
         setError("");
       })
       .catch((error) => {
-        setError(error.response.data.message);
+        setError(error.response.data.message || error.response.data.errMessage);
         setMessage("");
         console.log(error.message);
       });
@@ -60,8 +60,8 @@ const AuthContextProvider = ({ children }) => {
         // const token = localStorage.getItem("token");
       })
       .catch((error) => {
-        setError(error.response.data.message);
-        setMessage(error.response.data.message || error.response.data.error);
+        setError(error.response.data.message || error.response.data.error);
+
         console.log(error);
         console.log(message);
       });
@@ -118,8 +118,8 @@ const AuthContextProvider = ({ children }) => {
 
     // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
 
-    axios
-      .post(`${URL}/api/family/member/${data.familyId}`, data.memberInfo, {
+    const fetchData = axios
+      .post(`${URL}/api/family/member/${data?.familyId}`, data?.memberInfo, {
         headers: {
           Authorization: `Bearer ${user?.token}`,
         },
@@ -131,8 +131,9 @@ const AuthContextProvider = ({ children }) => {
       })
       .catch((error) => {
         setError(error.response.data.message);
-        console.log(error.message);
+        console.log(error.response.data.message);
       });
+    console.log({ fetchData });
   };
   const removeMember = (ids) => {
     // Add new family to server
@@ -167,13 +168,13 @@ const AuthContextProvider = ({ children }) => {
       .post(`${URL}/api/sections`, { ...sectionData })
       .then((res) => {
         console.log(res.data);
-        message("section created");
+        setMessage("section created");
+
         setError("");
       })
-      .catch((error) => {
-        setError(error.response.data.message);
+      .catch((err) => {
+        setError(err?.response?.data?.message || err?.response?.data?.error);
         setMessage("");
-        console.log(error.message);
       });
   };
   const getSection = (sectionId) => {
@@ -191,6 +192,26 @@ const AuthContextProvider = ({ children }) => {
         console.log(res.data);
         setSection(res?.data);
         setError("");
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+        console.log(error.message);
+      });
+  };
+  const removerSection = (sectionId) => {
+    // Add new family to server
+
+    // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
+
+    axios
+      .delete(`${URL}/api/sections/${sectionId}`, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setMessage("section removed");
       })
       .catch((error) => {
         setError(error.response.data.message);
@@ -349,6 +370,7 @@ const AuthContextProvider = ({ children }) => {
     createSection,
     getFamilySections,
     getSection,
+    removerSection,
     getProducts,
     addMember,
     removeMember,

@@ -11,10 +11,16 @@
     .user {
       text-transform: capitalize;
       margin-bottom: 50px;
+      span {
+        color: $primary_color;
+        font-weight: 600;
+      }
     }
     .links {
       display: flex;
+      flex-wrap: wrap;
       gap: 20px;
+
       .link {
         text-transform: capitalize;
         position: relative;

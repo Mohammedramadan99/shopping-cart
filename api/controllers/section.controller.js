@@ -47,11 +47,15 @@ export const getProducts = async (req, res) => {
   }
 };
 
-// for testing
-export const getSections = async (req, res) => {
+//
+export const removeSection = async (req, res) => {
   try {
-    const sections = await Section.find({});
-    res.status(200).json(sections);
+    const id = req.params.sectionId;
+    const section = await Section.findOneAndDelete({ id });
+    if (!section) {
+      res.status(404).json({ message: "section not found" });
+    }
+    res.status(200).json({ message: "section removed" });
   } catch (error) {
     res.status(500).json(error);
   }
