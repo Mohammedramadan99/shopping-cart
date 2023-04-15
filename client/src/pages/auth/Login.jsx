@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Auth.scss";
 import { AuthContext } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function Login({ setShowNav }) {
@@ -37,10 +37,6 @@ function Login({ setShowNav }) {
     }
   }, [userInfo?.token]);
   useEffect(() => {
-    if (message) {
-      toast.success(message);
-      reset();
-    }
     if (error) {
       toast.error(error);
       reset();
@@ -71,6 +67,9 @@ function Login({ setShowNav }) {
             />
           </div>
           <input type="submit" className="submit" />
+          <Link to="/register" className="link">
+            Register
+          </Link>
         </form>
       </div>
     </div>

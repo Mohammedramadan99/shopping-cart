@@ -6,6 +6,13 @@ $box-padding: 20px;
     flex-wrap: wrap;
     align-items: flex-start;
     gap: 20px;
+    @include tablet {
+      flex-direction: column;
+      .members_box,
+      .rooms_box {
+        width: 100%;
+      }
+    }
     .members_box,
     .rooms_box {
       flex: 1;
@@ -86,14 +93,13 @@ $box-padding: 20px;
       }
     }
   }
-}
-
-.note {
-  width: 100%;
-  color: $primary_color;
-  font-weight: 600;
-  text-transform: capitalize;
-  font-size: 12px;
-  padding: 20px;
-  background-color: #fff;
+  .note {
+    width: 100%;
+    color: $primary_color;
+    font-weight: 600;
+    text-transform: capitalize;
+    font-size: 12px;
+    padding: 20px;
+    background-color: #fff;
+  }
 }

@@ -18,15 +18,19 @@ function Home({ setShowNav, setShowFooter }) {
         )}
 
         <div className="links">
-          <div className="link">
-            <Link to={"/profile"}>profile</Link>
-          </div>
-          <div className="link">
-            <Link to={"/family"}>family</Link>
-          </div>
-          <div className="link">
-            <Link to={"/cart"}>cart</Link>
-          </div>
+          {user?._id && (
+            <>
+              <div className="link">
+                <Link to={"/profile"}>profile</Link>
+              </div>
+              <div className="link">
+                <Link to={"/family"}>family</Link>
+              </div>
+              <div className="link">
+                <Link to={"/cart"}>cart</Link>
+              </div>
+            </>
+          )}
 
           {user?.token ? (
             <div

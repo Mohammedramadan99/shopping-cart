@@ -3,7 +3,7 @@ import axios from "axios";
 import "./Auth.scss";
 import { AuthContext } from "../../context/AuthContext";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register({ setShowNav }) {
   const navigate = useNavigate();
@@ -91,7 +91,6 @@ function Register({ setShowNav }) {
   };
   useEffect(() => {
     if (message) {
-      // toast.success(message);
       reset();
       navigate("/login");
     }
@@ -143,11 +142,16 @@ function Register({ setShowNav }) {
           </div>
           <div className="item">
             <input type="file" onChange={handleImageChange} accept="image/*" />
-            <div className="previewImg">
-              <img src={imagePreview} width={100} height={100} alt="img" />
-            </div>
+            {imagePreview && (
+              <div className="previewImg">
+                <img src={imagePreview} width={100} height={100} alt="img" />
+              </div>
+            )}
           </div>
           <input type="submit" className="submit" />
+          <Link to="/login" className="link">
+            login
+          </Link>
         </form>
       </div>
     </div>

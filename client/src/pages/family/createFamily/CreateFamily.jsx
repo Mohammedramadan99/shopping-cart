@@ -1,33 +1,52 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function CreateFamily({ setShowNav }) {
-  const { user, createFamily } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { user, createFamily, message, reset, error } = useContext(AuthContext);
   setShowNav(true);
   const [familyName, setFamilyName] = useState("");
 
-  const [members, setMembers] = useState([{ email: "", idNumber: "" }]);
-  const handleAddMember = () => {
-    setMembers([...members, { email: "", idNumber: "" }]);
-  };
-  const handleMemberChange = (event, index) => {
-    const { name, value } = event.target;
-    const newMembers = [...members];
-    newMembers[index][name] = value;
-    setMembers(newMembers);
-  };
+  const [member, setMember] = useState({ email: "", idNumber: "" });
+  // const handleAddMember = () => {
+  //   setMembers([...members, { email: "", idNumber: "" }]);
+  // };
+  // const handleMemberChange = (event, index) => {
+  //   const { name, value } = event.target;
+  //   const newMembers = [...members];
+  //   newMembers[index][name] = value;
+  //   setMembers(newMembers);
+  // };
   const handleSubmit = (event) => {
     event.preventDefault();
     const familyData = {
       parent: user?._id,
       familyName,
-      members,
+      // member,
     };
     console.log({ familyData });
     createFamily(familyData);
   };
+  useEffect(() => {
+    if (message) {
+      toast.success(message);
+      reset();
+      navigate("/profile");
+    }
+    if (error) {
+      toast.error(error);
+      navigate("/profile");
+      reset();
+    }
+  }, [message, error]);
+
+  useEffect(() => {
+    !user?.token && navigate("/login");
+  }, [user]);
   return (
-    <div className="page create-family">
+    <div className="page createFamily">
       <div className="container">
         <form>
           <div className="item">
@@ -39,7 +58,7 @@ function CreateFamily({ setShowNav }) {
           </div>
 
           <div className="item">
-            {members.map((member, index) => (
+            {/* {members.map((member, index) => (
               <div key={index}>
                 <input
                   type="text"
@@ -56,12 +75,12 @@ function CreateFamily({ setShowNav }) {
                   onChange={(event) => handleMemberChange(event, index)}
                 />
               </div>
-            ))}
+            ))} */}
           </div>
         </form>
-        <button type="button" onClick={handleAddMember}>
+        {/* <button type="button" onClick={handleAddMember}>
           Add Member
-        </button>
+        </button> */}
         <button type="submit" onClick={handleSubmit}>
           Submit
         </button>

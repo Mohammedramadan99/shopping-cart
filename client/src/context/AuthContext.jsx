@@ -82,14 +82,14 @@ const AuthContextProvider = ({ children }) => {
     axios
       .post(`${URL}/api/family`, { ...familyData })
       .then((res) => {
-        console.log(res.data);
-        message("family created");
+        setMessage("family created");
+        console.log(message);
         setError("");
       })
       .catch((error) => {
         setError(error.response.data.message);
         setMessage("");
-        console.log(error.message);
+        console.log(error);
       });
   };
   const getFamily = () => {
@@ -134,6 +134,28 @@ const AuthContextProvider = ({ children }) => {
         console.log(error.response.data.message);
       });
     console.log({ fetchData });
+  };
+  const removeFamily = () => {
+    // Add new family to server
+
+    // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
+
+    axios
+      .delete(`${URL}/api/family`, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        // setMessage("family removed");
+        setError("");
+        setFamily({});
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+        console.log(error.message);
+      });
   };
   const removeMember = (ids) => {
     // Add new family to server
@@ -378,6 +400,7 @@ const AuthContextProvider = ({ children }) => {
     removeProduct,
     addToCart,
     removeFromCart,
+    removeFamily,
     reset,
   };
 

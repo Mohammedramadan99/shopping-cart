@@ -17,7 +17,7 @@ $main_speed: all 0.3s linear;
 }
 
 @mixin mobile {
-  @media (max-width: 480px) {
+  @media (max-width: 500px) {
     @content;
   }
 }

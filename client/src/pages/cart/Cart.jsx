@@ -5,7 +5,8 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
-function Cart() {
+function Cart({ setShowNav }) {
+  setShowNav(true);
   const {
     user,
     section,

@@ -40,8 +40,7 @@ function SectionDetails() {
 
   useEffect(() => {
     if (message) {
-      toast.success(message);
-      navigate("/");
+      // toast.success(message);
     }
     reset();
   }, [message]);

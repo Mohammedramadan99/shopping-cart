@@ -25,6 +25,9 @@ function AddMember() {
     }
   }, [error, message]);
 
+  useEffect(() => {
+    !user?.token && navigate("/login");
+  }, [user]);
   const submitHandler = (e) => {
     e.preventDefault();
     const data = {

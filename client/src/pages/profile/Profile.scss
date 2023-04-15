@@ -2,14 +2,21 @@
 .profile {
   .container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-
+    align-items: flex-start;
+    flex-wrap: wrap;
     gap: 20px;
+    @include tablet {
+      flex-direction: column;
+      align-items: center;
+      .userInfo,
+      .family {
+        width: 100% !important;
+      }
+    }
     .userInfo,
     .family {
       background-color: $bg_light;
-      .head {
+      .title {
         font-weight: 700;
         text-transform: capitalize;
         border-bottom: 2px solid #fff;
@@ -24,32 +31,69 @@
       gap: 20px;
       background-color: $bg_light;
       width: fit-content;
+      flex: 3;
       span {
         font-weight: 700;
         text-transform: capitalize;
         margin-right: 10px;
       }
       & > div {
-        padding: 10px 20px;
+        padding: 20px 20px;
+      }
+      .img,
+      .img_frame {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        text-transform: capitalize;
+      }
+      .img_frame {
+        border: 1px solid;
+        text-align: center;
       }
       .name {
         padding-top: 0;
+      }
+      .email {
+        padding: 20px 0;
       }
       .id {
         padding-bottom: 20px;
       }
     }
     .family {
-      .famName {
-        padding: 10px 20px;
-        border-bottom: 2px solid;
-        width: fit-content;
-        margin: auto;
+      flex: 9;
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 0 20px;
+        // background-color: #000 !important;
+        .remove {
+          // border: 1px solid;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .famName {
+          padding: 10px 20px;
+          border-bottom: 2px solid;
+          width: fit-content;
+          // margin: auto;
+        }
       }
       .members {
         padding: 10px 20px;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        @include mobile {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
         gap: 10px;
         .member {
           display: flex;
@@ -76,6 +120,15 @@
           }
         }
       }
+    }
+    .note {
+      width: 100%;
+      color: $primary_color;
+      font-weight: 600;
+      text-transform: capitalize;
+      font-size: 12px;
+      padding: 20px;
+      background-color: #fff;
     }
   }
 }

@@ -74,7 +74,7 @@ export const login = async (req, res, next) => {
       },
       process.env.JWT_KEY
     );
-    const { _id, firstName, lastName, email, idNumber } = user;
+    const { _id, firstName, lastName, email, idNumber, family, image } = user;
     const userToSend = {
       _id,
       firstName,
@@ -82,6 +82,8 @@ export const login = async (req, res, next) => {
       email,
       idNumber,
       token,
+      family,
+      image,
     };
     res
       .cookie("accessToken", token, {

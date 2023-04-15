@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import "./Family.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaTrash } from "react-icons/fa";
 function Family({ setShowNav }) {
@@ -50,6 +50,11 @@ function Family({ setShowNav }) {
     };
     removeMember(ids);
   };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    !user?.token && navigate("/login");
+  }, [user]);
   return (
     <div>
       <div className="family page">

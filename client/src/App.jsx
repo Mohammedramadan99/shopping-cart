@@ -10,7 +10,6 @@ import CreateFamily from "./pages/family/createFamily/CreateFamily";
 import CreateSection from "./pages/sections/createSection/CreateSection";
 import Family from "./pages/family/familyDetails/Family";
 import SectionDetails from "./pages/sections/sectionDetails/SectionDetails";
-import Sections from "./pages/sections/sections/Sections";
 import AddMember from "./pages/family/addMember/AddMember";
 import CreateProduct from "./pages/products/createProduct/CreateProduct";
 import Cart from "./pages/cart/Cart";
@@ -126,14 +125,7 @@ function App() {
             </>
           ),
         },
-        {
-          path: "/sections",
-          element: (
-            <>
-              <Sections setShowNav={setShowNav} setShowFooter={setShowFooter} />
-            </>
-          ),
-        },
+
         {
           path: "/cart",
           element: (

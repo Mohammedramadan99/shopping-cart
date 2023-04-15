@@ -15,4 +15,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   </React.StrictMode>
 );
 
-// how to add members without removing the family ?
+// remove a family
+// home links
+// add to cart

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function CreateSection() {
   const { user, getFamily, family, createSection, message, error, reset } =
@@ -29,7 +30,11 @@ function CreateSection() {
       reset();
     }
   }, [message, error]);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    !user?.token && navigate("/login");
+  }, [user]);
   return (
     <div className="craeteSection page">
       <form onSubmit={submitHandler}>

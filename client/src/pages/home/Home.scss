@@ -20,13 +20,15 @@
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
-
+      @include mobile {
+        flex-direction: column;
+      }
       .link {
         text-transform: capitalize;
         position: relative;
         opacity: 0.2;
         font-size: 50px;
-        font-weight: 200;
+        font-weight: 500;
         transition: $main_speed;
         &::before {
           content: "";

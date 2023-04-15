@@ -124,12 +124,14 @@ function CreateProduct() {
       setPrice(0);
       setProductName("");
       setImage("");
-      toast.success(message);
       reset();
-      navigate("/");
+      navigate(`/section/${section._id}`);
     }
   }, [message]);
 
+  useEffect(() => {
+    !user?.token && navigate("/login");
+  }, [user]);
   return (
     <div className="craeteSection page">
       <form onSubmit={submitHandler}>

@@ -30,7 +30,7 @@ const userSchema = new Schema(
       required: true,
       select: false, // exclude by default
     },
-    img: {
+    image: {
       type: String,
       required: false,
     },

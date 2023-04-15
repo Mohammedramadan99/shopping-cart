@@ -20,36 +20,42 @@ function Navbar() {
           )}
         </div>
         <div className={`links`}>
-          <div className="link">
-            <Link to={"/profile"} onClick={() => setShowNav(false)}>
-              profile
-            </Link>
-          </div>
-          <div className="link">
-            <Link to={"/family"} onClick={() => setShowNav(false)}>
-              family
-            </Link>
-          </div>
-          <div className="link">
-            <Link to={"/cart"} onClick={() => setShowNav(false)}>
-              cart
-            </Link>
-          </div>
           {user?.token ? (
-            <div
-              className="link"
-              style={{ cursor: "pointer" }}
-              onClick={logout}
-            >
-              logout
-            </div>
+            <>
+              <div className="link">
+                <Link to={"/profile"} onClick={() => setShowNav(false)}>
+                  profile
+                </Link>
+              </div>
+              <div className="link">
+                <Link to={"/family"} onClick={() => setShowNav(false)}>
+                  family
+                </Link>
+              </div>
+              <div className="link">
+                <Link to={"/cart"} onClick={() => setShowNav(false)}>
+                  cart
+                </Link>
+              </div>
+              <div
+                className="link"
+                style={{ cursor: "pointer" }}
+                onClick={logout}
+              >
+                logout
+              </div>
+            </>
           ) : (
             <>
               <div className="link">
-                <Link to={"/login"}>login</Link>
+                <Link to={"/login"} onClick={() => setShowNav(false)}>
+                  login
+                </Link>
               </div>
               <div className="link">
-                <Link to={"/register"}>register</Link>
+                <Link to={"/register"} onClick={() => setShowNav(false)}>
+                  register
+                </Link>
               </div>
             </>
           )}

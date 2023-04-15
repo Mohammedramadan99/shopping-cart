@@ -4,13 +4,12 @@ import Section from "../models/section.model.js";
 
 export const createFamily = async (req, res, next) => {
   try {
-    const { parent, familyName, members } = req.body;
+    const { parent, familyName, member } = req.body;
     const family = await Family.findOne({ parent });
-    console.log({ family });
     if (family) {
-      res.status(403).json("you already have a family");
+      res.status(403).json({ message: "you already have a family" });
     } else {
-      const createFamily = new Family({ parent, familyName, members });
+      const createFamily = new Family({ parent, familyName, member });
       await createFamily.save();
       res.status(201).json(createFamily);
     }
@@ -22,23 +21,25 @@ export const createFamily = async (req, res, next) => {
 export const getFamily = async (req, res) => {
   try {
     const parent = req.user; // Assuming the parent user is authenticated
-    console.log(parent);
+    console.log({ parent });
     // const family = await Family.findOne({ parent }).populate("cart.product");
     const family = await Family.findOne({ parent }).populate("cart.product");
-
+    console.log({ family });
     if (!family) {
-      const user = await User.findOne({ parent }).populate("family");
-      const familyId = user.family._id;
-      const family = await Family.findOne({ familyId }).populate(
-        "cart.product"
-      );
-      if (!user) return res.status(404).json({ error: "Family not found" });
+      const user = await User.findOne({ _id: parent }).populate("family");
+      console.log(user);
+      if (!user)
+        return res.status(404).json({ error: "you don't have a family" });
 
-      res.status(200).json({ family });
-      return;
+      // const familyId = user.family._id;
+      // const family = await Family.findOne({ familyId }).populate(
+      //   "cart.product"
+      // );
+
+      return res.status(201).json({ family: user.family });
+    } else {
+      return res.status(200).json({ family });
     }
-    res.status(200).json({ family });
-    return;
   } catch (error) {
     res.status(500).json(error);
     return;
@@ -84,23 +85,30 @@ export const addMember = async (req, res) => {
       return res
         .status(400)
         .json({ message: "This email is not in our system" });
-
-    // Check if the member already exists in the family
-    const existingMember = family.members.find(
-      (member) => member.idNumber === idNumber || member.email === email
-    );
-    const upUser = await User.findOneAndUpdate(email, { family: family._id });
-    if (existingMember) {
-      return res
-        .status(400)
-        .json({ message: "Member already exists in the family", upUser });
-    }
     if (user.idNumber !== idNumber)
       return res.status(400).json({ message: "idNumber is wrong" });
+    // Check if the member already exists in the family
+    const existingMember = family.members.find(
+      (member) => member.email === email
+    );
+
+    if (existingMember) {
+      return res.status(400).json({
+        message: "Member already exists in the family",
+        existingMember,
+      });
+    }
+
+    const upUser = await User.findOneAndUpdate(
+      { email },
+      { family: family._id },
+      { new: true }
+    );
+
     // Add the new member to the family
     family.members.push({ idNumber, email });
     await family.save();
-    res.status(200).json(family);
+    res.status(200).json({ family, upUser });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error });
@@ -120,8 +128,13 @@ export const removeMember = async (req, res) => {
       return res.status(404).json({ error: "Member not found" });
     }
     family.members.splice(memberIndex, 1);
+    const upUser = await User.findOneAndUpdate(
+      { _id: memberId },
+      { family: null },
+      { new: true }
+    );
     await family.save();
-    res.status(200).json({ message: "Member removed successfully" });
+    res.status(200).json({ message: "Member removed successfully", upUser });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
