@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import AuthContextProvider from "./context/AuthContext.jsx";
-import FamilyContextProvider from "./context/FamilyContext";
+
 import "./index.scss";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

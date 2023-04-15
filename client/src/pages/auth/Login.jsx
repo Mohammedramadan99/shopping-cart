@@ -1,17 +1,19 @@
-import React, { useContext, useState } from "react";
-import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 import "./Auth.scss";
 import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Login({ setShowNav }) {
+  let navigate = useNavigate();
+
   setShowNav(true);
   const [file, setFile] = useState(null);
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
-  const { login, error, message } = useContext(AuthContext);
-
+  const { login, error, message, user: userInfo } = useContext(AuthContext);
+  console.log({ userInfo });
   const handleChange = (e) => {
     setUser((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
@@ -22,6 +24,12 @@ function Login({ setShowNav }) {
     // Send the POST request to the backend
     login(user);
   };
+  useEffect(() => {
+    if (userInfo?.token) {
+      navigate("/");
+    }
+  }, [userInfo?.token]);
+
   return (
     <div className="login">
       <div className="container">

@@ -48,12 +48,14 @@ $box-padding: 20px;
           display: flex;
           align-items: center;
           justify-content: space-between;
+          gap: 20px;
           .email {
             font-weight: 700;
             color: #666;
           }
           .idNumber {
             color: #999;
+            font-size: 12px;
           }
           &:hover {
             background-color: #fff;

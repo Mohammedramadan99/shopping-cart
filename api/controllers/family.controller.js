@@ -1,4 +1,5 @@
 import Family from "../models/family.model.js";
+import User from "../models/user.model.js";
 import Section from "../models/section.model.js";
 
 export const createFamily = async (req, res, next) => {
@@ -23,12 +24,19 @@ export const getFamily = async (req, res) => {
     const parent = req.user; // Assuming the parent user is authenticated
     console.log(parent);
     const family = await Family.findOne({ parent }).populate("cart.product");
+
     if (!family) {
-      return res.status(404).json({ error: "Family not found" });
+      const user = await User.findOne({ parent }).populate("family");
+      if (!user) return res.status(404).json({ error: "Family not found" });
+
+      res.status(200).json({ family: user.family });
+      return;
     }
     res.status(200).json({ family });
+    return;
   } catch (error) {
     res.status(500).json(error);
+    return;
   }
 };
 export const getFamilies = async (req, res) => {
@@ -48,17 +56,26 @@ export const addMember = async (req, res) => {
     if (!family) {
       return res.status(400).json({ message: "Family not found" });
     }
+    // Check if the member is a user or not
+    const user = await User.findOne({ email });
+
+    if (!user)
+      return res
+        .status(400)
+        .json({ message: "This email is not in our system" });
 
     // Check if the member already exists in the family
     const existingMember = family.members.find(
       (member) => member.idNumber === idNumber || member.email === email
     );
+    const upUser = await User.findOneAndUpdate(email, { family: family._id });
     if (existingMember) {
       return res
         .status(400)
-        .json({ message: "Member already exists in the family" });
+        .json({ message: "Member already exists in the family", upUser });
     }
-
+    if (user.idNumber !== idNumber)
+      return res.status(400).json({ message: "idNumber is wrong" });
     // Add the new member to the family
     family.members.push({ idNumber, email });
     await family.save();
@@ -68,6 +85,27 @@ export const addMember = async (req, res) => {
     res.status(500).json({ message: error });
   }
 };
+export const removeMember = async (req, res) => {
+  const { familyId, memberId } = req.params;
+  try {
+    const family = await Family.findById(familyId);
+    if (!family) {
+      return res.status(404).json({ error: "Family not found" });
+    }
+    const memberIndex = family.members.findIndex(
+      (member) => member._id.toString() === memberId
+    );
+    if (memberIndex === -1) {
+      return res.status(404).json({ error: "Member not found" });
+    }
+    family.members.splice(memberIndex, 1);
+    await family.save();
+    res.status(200).json({ message: "Member removed successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 export const getSections = async (req, res) => {
   try {
     const sections = await Section.find({ familyId: req.params.familyId });

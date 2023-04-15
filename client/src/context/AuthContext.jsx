@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-
 export const AuthContext = createContext();
+
 const URL = "http://localhost:3001";
 const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(
@@ -134,6 +134,28 @@ const AuthContextProvider = ({ children }) => {
         console.log(error.message);
       });
   };
+  const removeMember = (ids) => {
+    // Add new family to server
+
+    // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
+
+    axios
+      .delete(`${URL}/api/family/member/${ids.memberId}/${ids.familyId}`, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setMessage("member removed");
+        setError("");
+        getFamily();
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+        console.log(error.message);
+      });
+  };
 
   // ------------------ Section -----------------
   const createSection = (sectionData) => {
@@ -219,7 +241,98 @@ const AuthContextProvider = ({ children }) => {
         console.log(error.message);
       });
   };
+  const addProduct = (product) => {
+    // Add new family to server
 
+    // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
+
+    axios
+      .post(`${URL}/api/products`, product, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setProducts(res?.data);
+        setMessage("Product Added");
+        setError("");
+      })
+      .catch((error) => {
+        setError(error.response.data.message || error.response.data.errMessage);
+        console.log(error.message);
+      });
+  };
+  const removeProduct = (product) => {
+    // Add new family to server
+
+    // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
+
+    axios
+      .delete(`${URL}/api/products/${product?._id}`, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        getProducts(product?.sectionId);
+        setMessage("Product removed");
+
+        setError("");
+      })
+      .catch((error) => {
+        setError(error.response.data.message || error.response.data.errMessage);
+        console.log(error.message);
+      });
+  };
+  const addToCart = (ids) => {
+    // Add new family to server
+
+    // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
+
+    axios
+      .get(`${URL}/api/family/${ids?.familyId}/${ids?.productId}`, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setMessage("Product added to cart");
+        setError("");
+      })
+      .catch((error) => {
+        setError(error.response.data.message || error.response.data.errMessage);
+        console.log(error.message);
+      });
+  };
+  const removeFromCart = (ids) => {
+    // Add new family to server
+
+    // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
+
+    axios
+      .delete(`${URL}/api/family/${ids?.familyId}/${ids?.productId}`, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setMessage("Product deleted from the cart");
+        getFamily();
+        setError("");
+      })
+      .catch((error) => {
+        setError(error.response.data.message || error.response.data.errMessage);
+        console.log(error.message);
+      });
+  };
+  const reset = () => {
+    setMessage("");
+    setError("");
+  };
   const value = {
     user,
     family,
@@ -238,6 +351,12 @@ const AuthContextProvider = ({ children }) => {
     getSection,
     getProducts,
     addMember,
+    removeMember,
+    addProduct,
+    removeProduct,
+    addToCart,
+    removeFromCart,
+    reset,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

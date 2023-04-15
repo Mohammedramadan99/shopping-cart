@@ -1,0 +1,81 @@
+@import "../../Globals.scss";
+.profile {
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 20px;
+    .userInfo,
+    .family {
+      background-color: $bg_light;
+      .head {
+        font-weight: 700;
+        text-transform: capitalize;
+        border-bottom: 2px solid #fff;
+        color: #fff;
+        background-color: $secondary_color;
+        padding: 10px 20px;
+      }
+    }
+    .userInfo {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      background-color: $bg_light;
+      width: fit-content;
+      span {
+        font-weight: 700;
+        text-transform: capitalize;
+        margin-right: 10px;
+      }
+      & > div {
+        padding: 10px 20px;
+      }
+      .name {
+        padding-top: 0;
+      }
+      .id {
+        padding-bottom: 20px;
+      }
+    }
+    .family {
+      .famName {
+        padding: 10px 20px;
+        border-bottom: 2px solid;
+        width: fit-content;
+        margin: auto;
+      }
+      .members {
+        padding: 10px 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 10px;
+        .member {
+          display: flex;
+          align-items: center;
+          padding: 10px;
+          .number {
+            flex: 1;
+          }
+          .email {
+            flex: 11;
+          }
+          .control {
+            font-size: 20px;
+            color: $primary_color;
+            font-weight: 700;
+            padding: 10px;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

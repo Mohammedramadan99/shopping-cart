@@ -1,0 +1,49 @@
+@import "../../../Globals.scss";
+.craeteSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 90vh;
+
+  form {
+    max-width: 500px;
+    width: 100%;
+    background-color: $bg_light;
+    padding: 20px;
+    border-top: 3px solid $primary_color;
+    .item {
+      width: 100%;
+      input {
+        background-color: transparent;
+        border: 0;
+        width: 100%;
+        padding: 10px;
+        border-bottom: 2px solid #fff;
+        margin-bottom: 20px;
+        &::placeholder {
+          color: #999 !important;
+          text-transform: capitalize;
+        }
+      }
+    }
+    .submit {
+      //   background-color: $primary_color;
+      border: none;
+      &.disabled {
+        opacity: 0.6;
+      }
+    }
+    .previewImg {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 40px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+  }
+}

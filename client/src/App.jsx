@@ -12,6 +12,8 @@ import Family from "./pages/family/familyDetails/Family";
 import SectionDetails from "./pages/sections/sectionDetails/SectionDetails";
 import Sections from "./pages/sections/sections/Sections";
 import AddMember from "./pages/family/addMember/AddMember";
+import CreateProduct from "./pages/products/createProduct/CreateProduct";
+import Cart from "./pages/cart/Cart";
 
 function App() {
   const [showNav, setShowNav] = useState(true);
@@ -57,7 +59,7 @@ function App() {
           path: "/profile",
           element: (
             <>
-              <Profile />
+              <Profile setShowNav={setShowNav} />
             </>
           ),
         },
@@ -106,6 +108,17 @@ function App() {
           ),
         },
         {
+          path: "/section/:id/product/create",
+          element: (
+            <>
+              <CreateProduct
+                setShowNav={setShowNav}
+                setShowFooter={setShowFooter}
+              />
+            </>
+          ),
+        },
+        {
           path: "/family",
           element: (
             <>
@@ -118,6 +131,14 @@ function App() {
           element: (
             <>
               <Sections setShowNav={setShowNav} setShowFooter={setShowFooter} />
+            </>
+          ),
+        },
+        {
+          path: "/cart",
+          element: (
+            <>
+              <Cart setShowNav={setShowNav} setShowFooter={setShowFooter} />
             </>
           ),
         },

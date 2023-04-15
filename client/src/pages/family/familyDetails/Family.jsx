@@ -2,7 +2,8 @@ import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import "./Family.scss";
 import { Link } from "react-router-dom";
-
+import { toast } from "react-toastify";
+import { FaTrash } from "react-icons/fa";
 function Family({ setShowNav }) {
   const {
     getSection,
@@ -13,8 +14,15 @@ function Family({ setShowNav }) {
     products,
     sections,
     user,
+    message,
+    reset,
+    removeMember,
   } = useContext(AuthContext);
-  getFamily();
+  useEffect(() => {
+    getFamily();
+  }, []);
+
+  setShowNav(true);
   useEffect(() => {
     if (user?.token) {
       getFamilySections(family?._id);
@@ -24,6 +32,13 @@ function Family({ setShowNav }) {
     }
   }, [family._id, user.token, products]);
 
+  const removeHandler = (memberId) => {
+    const ids = {
+      familyId: family._id,
+      memberId,
+    };
+    removeMember(ids);
+  };
   return (
     <div>
       <div className="family page">
@@ -38,8 +53,18 @@ function Family({ setShowNav }) {
             <div className="members">
               {family?.members?.map((member) => (
                 <div className="member" key={member?._id}>
-                  <div className="email">{member.email}</div>
-                  <div className="idNumber"> {member.idNumber} </div>
+                  <div className="info">
+                    <div className="email">{member.email}</div>
+                    <div className="idNumber"> {member.idNumber} </div>
+                  </div>
+                  <div className="control">
+                    <div
+                      className="trash"
+                      onClick={() => removeHandler(member._id)}
+                    >
+                      <FaTrash />
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>

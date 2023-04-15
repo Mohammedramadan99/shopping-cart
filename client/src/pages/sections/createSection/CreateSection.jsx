@@ -16,6 +16,7 @@ function CreateSection() {
     console.log(sectionData);
     createSection(sectionData);
   };
+  // const product = { productName, sectionId, price };
   return (
     <div className="craeteSection page">
       <form onSubmit={submitHandler}>
