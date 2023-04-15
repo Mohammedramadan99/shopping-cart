@@ -2,8 +2,9 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
 import { AuthContext } from "../../context/AuthContext";
-import { FaHamburger } from "react-icons/fa";
+
 import { AiOutlineClose } from "react-icons/ai";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 function Navbar() {
   const { families, user, logout } = useContext(AuthContext);
@@ -13,20 +14,26 @@ function Navbar() {
       <div className="container">
         <div className="menu">
           {!showNav ? (
-            <FaHamburger onClick={() => setShowNav(!showNav)} />
+            <GiHamburgerMenu onClick={() => setShowNav(!showNav)} />
           ) : (
             <AiOutlineClose onClick={() => setShowNav(false)} />
           )}
         </div>
         <div className={`links`}>
           <div className="link">
-            <Link to={"/profile"}>profile</Link>
+            <Link to={"/profile"} onClick={() => setShowNav(false)}>
+              profile
+            </Link>
           </div>
           <div className="link">
-            <Link to={"/family"}>family</Link>
+            <Link to={"/family"} onClick={() => setShowNav(false)}>
+              family
+            </Link>
           </div>
           <div className="link">
-            <Link to={"/cart"}>cart</Link>
+            <Link to={"/cart"} onClick={() => setShowNav(false)}>
+              cart
+            </Link>
           </div>
           {user?.token ? (
             <div

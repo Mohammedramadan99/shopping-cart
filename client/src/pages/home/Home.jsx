@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import { Link } from "react-router-dom";
 import "./Home.scss";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 function Home({ setShowNav, setShowFooter }) {
   setShowNav(false);
   setShowFooter(false);
