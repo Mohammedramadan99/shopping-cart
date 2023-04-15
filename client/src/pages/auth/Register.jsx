@@ -126,7 +126,7 @@ function Register({ setShowNav }) {
             <label>email</label>
             <input
               name="email"
-              type="text"
+              type="email"
               placeholder="email"
               onChange={handleChange}
             />
@@ -135,7 +135,7 @@ function Register({ setShowNav }) {
             <label>password</label>
             <input
               name="password"
-              type="text"
+              type="passowrd"
               placeholder="password"
               onChange={handleChange}
             />

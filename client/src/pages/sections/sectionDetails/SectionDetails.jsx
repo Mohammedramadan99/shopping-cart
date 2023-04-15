@@ -19,6 +19,7 @@ function SectionDetails() {
     addToCart,
     message,
     reset,
+    cart,
   } = useContext(AuthContext);
 
   const { id } = useParams();

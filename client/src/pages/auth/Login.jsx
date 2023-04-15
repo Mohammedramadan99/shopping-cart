@@ -52,7 +52,7 @@ function Login({ setShowNav }) {
             <label>email</label>
             <input
               name="email"
-              type="text"
+              type="email"
               placeholder="email"
               onChange={handleChange}
             />
