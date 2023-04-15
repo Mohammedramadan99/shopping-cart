@@ -22,6 +22,10 @@ export const createProduct = async (req, res, next) => {
         image: cloudinaryResult.secure_url,
       });
       await product.save();
+      res.status(201).json({
+        product,
+      });
+      return;
     }
     const product = new Product({
       productName,
@@ -29,8 +33,10 @@ export const createProduct = async (req, res, next) => {
       price,
       image: "",
     });
+
     await product.save();
     res.status(201).json(product);
+    return;
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

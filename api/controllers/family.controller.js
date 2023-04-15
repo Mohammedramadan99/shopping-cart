@@ -24,7 +24,6 @@ export const getFamily = async (req, res) => {
     console.log({ parent });
     // const family = await Family.findOne({ parent }).populate("cart.product");
     const family = await Family.findOne({ parent }).populate("cart.product");
-    console.log({ family });
     if (!family) {
       const user = await User.findOne({ _id: parent }).populate("family");
       console.log(user);

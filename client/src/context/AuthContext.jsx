@@ -109,8 +109,8 @@ const AuthContextProvider = ({ children }) => {
         setError("");
       })
       .catch((error) => {
-        setError(error.response.data.message);
-        console.log(error.message);
+        setError(error?.response?.data?.message);
+        console.log(error?.message);
       });
   };
   const addMember = (data) => {
