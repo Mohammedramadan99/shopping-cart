@@ -163,7 +163,7 @@ const AuthContextProvider = ({ children }) => {
     // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
 
     axios
-      .delete(`${URL}/api/family/member/${ids.memberId}/${ids.familyId}`, {
+      .delete(`${URL}/api/family/member/${ids.idNumber}/${ids.familyId}`, {
         headers: {
           Authorization: `Bearer ${user?.token}`,
         },

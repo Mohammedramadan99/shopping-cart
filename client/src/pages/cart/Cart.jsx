@@ -3,9 +3,10 @@ import { AuthContext } from "../../context/AuthContext";
 import { FaTrash } from "react-icons/fa";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Cart({ setShowNav }) {
+  const navigate = useNavigate();
   setShowNav(true);
   const {
     user,
@@ -30,7 +31,9 @@ function Cart({ setShowNav }) {
   }, [message]);
 
   console.log({ family });
-
+  useEffect(() => {
+    !user?.token && navigate("/login");
+  }, [user]);
   return (
     <div className="page section">
       <div className="container">

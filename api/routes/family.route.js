@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.post("/", createFamily);
 router.post("/member/:familyId", isAuth, addMember);
-router.delete("/member/:memberId/:familyId", isAuth, removeMember);
+router.delete("/member/:idNumber/:familyId", isAuth, removeMember);
 
 // remove from cart
 router.delete("/:familyId/:productId", isAuth, removeFromCart);

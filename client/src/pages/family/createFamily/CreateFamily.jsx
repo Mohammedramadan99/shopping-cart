@@ -2,14 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import "./CreateFamily.scss";
 function CreateFamily({ setShowNav }) {
   const navigate = useNavigate();
   const { user, createFamily, message, reset, error } = useContext(AuthContext);
   setShowNav(true);
   const [familyName, setFamilyName] = useState("");
 
-  const [member, setMember] = useState({ email: "", idNumber: "" });
   // const handleAddMember = () => {
   //   setMembers([...members, { email: "", idNumber: "" }]);
   // };
@@ -52,36 +51,20 @@ function CreateFamily({ setShowNav }) {
           <div className="item">
             <input
               type="text"
-              placeholder="name"
+              placeholder="family name"
               onChange={(e) => setFamilyName(e.target.value)}
             />
-          </div>
-
-          <div className="item">
-            {/* {members.map((member, index) => (
-              <div key={index}>
-                <input
-                  type="text"
-                  name="email"
-                  placeholder="Email"
-                  value={member.name}
-                  onChange={(event) => handleMemberChange(event, index)}
-                />
-                <input
-                  type="text"
-                  name="idNumber"
-                  placeholder="id number"
-                  value={member.age}
-                  onChange={(event) => handleMemberChange(event, index)}
-                />
-              </div>
-            ))} */}
           </div>
         </form>
         {/* <button type="button" onClick={handleAddMember}>
           Add Member
         </button> */}
-        <button type="submit" onClick={handleSubmit}>
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          className="main-btn submit"
+          disabled={familyName === ""}
+        >
           Submit
         </button>
       </div>

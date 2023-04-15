@@ -115,21 +115,23 @@ export const addMember = async (req, res) => {
   }
 };
 export const removeMember = async (req, res) => {
-  const { familyId, memberId } = req.params;
+  const { familyId, idNumber } = req.params;
   try {
     const family = await Family.findById(familyId);
     if (!family) {
       return res.status(404).json({ error: "Family not found" });
     }
     const memberIndex = family.members.findIndex(
-      (member) => member._id.toString() === memberId
+      (member) => member.idNumber === idNumber
     );
     if (memberIndex === -1) {
       return res.status(404).json({ error: "Member not found" });
     }
     family.members.splice(memberIndex, 1);
+    console.log("remover member", idNumber);
+    // console.log("before Update", user);
     const upUser = await User.findOneAndUpdate(
-      { _id: memberId },
+      { idNumber },
       { family: null },
       { new: true }
     );

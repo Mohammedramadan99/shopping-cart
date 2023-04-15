@@ -31,7 +31,7 @@ function Family({ setShowNav }) {
     if (family?._id) {
       getSection(family?._id);
     }
-  }, [family._id, user.token, products]);
+  }, [family?._id, user.token, products]);
   useEffect(() => {
     if (message) {
       toast.success(message);
@@ -43,10 +43,10 @@ function Family({ setShowNav }) {
     }
   }, [message, error]);
 
-  const removeHandler = (memberId) => {
+  const removeHandler = (idNumber) => {
     const ids = {
       familyId: family?._id,
-      memberId,
+      idNumber,
     };
     removeMember(ids);
   };
@@ -59,55 +59,64 @@ function Family({ setShowNav }) {
     <div>
       <div className="family page">
         <div className="container">
-          <div className="members_box">
-            <div className="header">
-              <div className="title">members</div>
-              <Link to="/family/member" className="add">
-                +
-              </Link>
-            </div>
-            <div className="members">
-              {family?.members?.length > 0 ? (
-                family?.members?.map((member) => (
-                  <div className="member" key={member?._id}>
-                    <div className="info">
-                      <div className="email">{member.email}</div>
-                      <div className="idNumber"> {member.idNumber} </div>
-                    </div>
-                    <div className="control">
-                      <div
-                        className="trash"
-                        onClick={() => removeHandler(member._id)}
-                      >
-                        <FaTrash />
-                      </div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="note">family has no members</div>
-              )}
-            </div>
-          </div>
-          <div className="rooms_box">
-            <div className="header">
-              <div className="title">rooms</div>
-              <Link to="/section/create" className="add">
-                +
-              </Link>
-            </div>
-            <div className="rooms">
-              {sections?.length > 0 ? (
-                sections?.map((sec) => (
-                  <Link to={`/section/${sec?._id}`} className="room">
-                    <div className="name">{sec?.sectionName}</div>
+          {family?._id ? (
+            <>
+              <div className="members_box">
+                <div className="header">
+                  <div className="title">members</div>
+                  <Link to="/family/member" className="add">
+                    +
                   </Link>
-                ))
-              ) : (
-                <div className="note">family has no rooms</div>
-              )}
+                </div>
+                <div className="members">
+                  {family?.members?.length > 0 ? (
+                    family?.members?.map((member) => (
+                      <div className="member" key={member?._id}>
+                        <div className="info">
+                          <div className="email">{member.email}</div>
+                          <div className="idNumber"> {member.idNumber} </div>
+                        </div>
+                        <div className="control">
+                          <div
+                            className="trash"
+                            onClick={() => removeHandler(member.idNumber)}
+                          >
+                            <FaTrash />
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="note">family has no members</div>
+                  )}
+                </div>
+              </div>
+              <div className="rooms_box">
+                <div className="header">
+                  <div className="title">rooms</div>
+                  <Link to="/section/create" className="add">
+                    +
+                  </Link>
+                </div>
+                <div className="rooms">
+                  {sections?.length > 0 ? (
+                    sections?.map((sec) => (
+                      <Link to={`/section/${sec?._id}`} className="room">
+                        <div className="name">{sec?.sectionName}</div>
+                      </Link>
+                    ))
+                  ) : (
+                    <div className="note">family has no rooms</div>
+                  )}
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="note">
+              you don't have family,{" "}
+              <Link to="/family/create">let's create</Link> your own one
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

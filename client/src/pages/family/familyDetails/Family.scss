@@ -96,10 +96,13 @@ $box-padding: 20px;
   .note {
     width: 100%;
     color: $primary_color;
-    font-weight: 600;
+    font-weight: 400;
     text-transform: capitalize;
     font-size: 12px;
     padding: 20px;
-    background-color: #fff;
+    background-color: transparent !important;
+    a {
+      font-weight: 900 !important;
+    }
   }
 }
