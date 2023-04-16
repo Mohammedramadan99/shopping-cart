@@ -66,9 +66,11 @@ function Family({ setShowNav }) {
               <div className="members_box">
                 <div className="header">
                   <div className="title">members</div>
-                  <Link to="/family/member" className="add">
-                    +
-                  </Link>
+                  {family.parent === user?._id && (
+                    <Link to="/family/member" className="add">
+                      +
+                    </Link>
+                  )}
                 </div>
                 <div className="members">
                   {family?.members?.length > 0 ? (
