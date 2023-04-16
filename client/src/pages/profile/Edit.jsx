@@ -1,14 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import "./Auth.scss";
-import { AuthContext } from "../../context/AuthContext";
-import { toast } from "react-toastify";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
-function Register({ setShowNav }) {
+function Edit({ setEdit }) {
   const navigate = useNavigate();
-  setShowNav(true);
-
+  const { register, error, message, reset } = useContext(AuthContext);
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -17,7 +13,6 @@ function Register({ setShowNav }) {
   });
   const [image, setImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
-  const { register, error, message, reset } = useContext(AuthContext);
 
   const handleChange = (e) => {
     setUser((prev) => {
@@ -99,63 +94,69 @@ function Register({ setShowNav }) {
       reset();
     }
   }, [message, error]);
-
   return (
-    <div className="register">
+    <div className="edit">
       <div className="container">
-        <form className="form" onSubmit={submitHandler}>
-          <div className="item">
-            <label>first name</label>
-            <input
-              name="firstName"
-              type="text"
-              placeholder="first name"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="item">
-            <label>last name</label>
-            <input
-              name="lastName"
-              type="text"
-              placeholder="last name"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="item">
-            <label>email</label>
-            <input
-              name="email"
-              type="email"
-              placeholder="email"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="item">
-            <label>password</label>
-            <input
-              name="password"
-              type="passowrd"
-              placeholder="password"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="item">
-            <input type="file" onChange={handleImageChange} accept="image/*" />
-            {imagePreview && (
-              <div className="previewImg">
-                <img src={imagePreview} width={100} height={100} alt="img" />
-              </div>
-            )}
-          </div>
-          <input type="submit" className="submit" />
-          <Link to="/login" className="link">
-            login
-          </Link>
-        </form>
+        <div className="box">
+          <div className="img"></div>
+          <form className="form" onSubmit={submitHandler}>
+            <div className="item">
+              <label>first name</label>
+              <input
+                name="firstName"
+                type="text"
+                placeholder="first name"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="item">
+              <label>last name</label>
+              <input
+                name="lastName"
+                type="text"
+                placeholder="last name"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="item">
+              <label>email</label>
+              <input
+                name="email"
+                type="email"
+                placeholder="email"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="item">
+              <label>password</label>
+              <input
+                name="password"
+                type="passowrd"
+                placeholder="password"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="item">
+              <input
+                type="file"
+                onChange={handleImageChange}
+                accept="image/*"
+              />
+              {imagePreview && (
+                <div className="previewImg">
+                  <img src={imagePreview} width={100} height={100} alt="img" />
+                </div>
+              )}
+            </div>
+            <input type="submit" className="submit" />
+            <Link to="/login" className="link">
+              login
+            </Link>
+          </form>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Register;
+export default Edit;

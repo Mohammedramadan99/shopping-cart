@@ -77,12 +77,14 @@ function Family({ setShowNav }) {
                           <div className="idNumber"> {member.idNumber} </div>
                         </div>
                         <div className="control">
-                          <div
-                            className="trash"
-                            onClick={() => removeHandler(member.idNumber)}
-                          >
-                            <FaTrash />
-                          </div>
+                          {family.parent === user?._id && (
+                            <div
+                              className="trash"
+                              onClick={() => removeHandler(member.idNumber)}
+                            >
+                              <FaTrash />
+                            </div>
+                          )}
                         </div>
                       </div>
                     ))

@@ -60,7 +60,10 @@ function SectionDetails() {
             </Link>
             <div
               className="main-btn"
-              onClick={() => removerSection(section?._id)}
+              onClick={() => {
+                removerSection(section?._id);
+                navigate("/family");
+              }}
             >
               <FaTrash />
             </div>

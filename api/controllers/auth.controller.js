@@ -105,6 +105,21 @@ export const logout = async (req, res) => {
     .status(200)
     .send("User has been logged out.");
 };
+export const updateUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(201).json({ user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 export const users = async (req, res) => {
   try {
     const users = await User.find({});

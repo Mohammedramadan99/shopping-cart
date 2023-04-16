@@ -4,6 +4,7 @@ import {
   login,
   logout,
   users,
+  updateUser,
 } from "../controllers/auth.controller.js";
 import { registerValidate, loginValidate } from "../utils/validateUser.js";
 
@@ -13,5 +14,6 @@ router.post("/register", registerValidate, register);
 router.post("/login", loginValidate, login);
 router.post("/logout", logout);
 router.get("/users", users);
+router.put("/:id", updateUser);
 
 export default router;

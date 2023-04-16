@@ -5,9 +5,10 @@ import { AuthContext } from "../../context/AuthContext";
 
 import { AiOutlineClose } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
+import familyModel from "../../../../api/models/family.model";
 
 function Navbar() {
-  const { families, user, logout } = useContext(AuthContext);
+  const { family, user, logout } = useContext(AuthContext);
   const [showNav, setShowNav] = useState(false);
   return (
     <div className={`navbar ${showNav ? "md-screens" : ""}`}>
@@ -35,6 +36,7 @@ function Navbar() {
               <div className="link">
                 <Link to={"/cart"} onClick={() => setShowNav(false)}>
                   cart
+                  <span> {family?.cart?.length} </span>
                 </Link>
               </div>
               <div

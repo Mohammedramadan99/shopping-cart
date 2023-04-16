@@ -26,6 +26,11 @@ export const getFamily = async (req, res) => {
     const family = await Family.findOne({ parent }).populate("cart.product");
     if (!family) {
       const user = await User.findOne({ _id: parent }).populate("family");
+      const familyId = user.family?._id;
+      const family = await Family.findOne({ _id: familyId }).populate(
+        "cart.product"
+      );
+
       console.log(user);
       if (!user)
         return res.status(404).json({ error: "you don't have a family" });
@@ -35,7 +40,7 @@ export const getFamily = async (req, res) => {
       //   "cart.product"
       // );
 
-      return res.status(201).json({ family: user.family });
+      return res.status(201).json({ family });
     } else {
       return res.status(200).json({ family });
     }

@@ -54,9 +54,12 @@ export const removeSection = async (req, res) => {
     const section = await Section.findOneAndDelete({ id });
     if (!section) {
       res.status(404).json({ message: "section not found" });
+      return;
     }
     res.status(200).json({ message: "section removed" });
+    return;
   } catch (error) {
     res.status(500).json(error);
+    return;
   }
 };

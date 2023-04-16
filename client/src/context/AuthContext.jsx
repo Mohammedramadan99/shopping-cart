@@ -343,6 +343,7 @@ const AuthContextProvider = ({ children }) => {
       .then((res) => {
         console.log(res.data);
         setMessage("Product added to cart");
+        getFamily();
         setError("");
       })
       .catch((error) => {

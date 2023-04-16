@@ -3,8 +3,11 @@ import "./Profile.scss";
 import { AuthContext } from "../../context/AuthContext";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
+import { useState } from "react";
+import Edit from "./Edit";
 function Profile({ setShowNav }) {
   const navigate = useNavigate();
+  const [edit, setEdit] = useState(false);
   setShowNav(true);
   const { user, family, getFamily, removeFamily } = useContext(AuthContext);
   console.log({ family });
@@ -21,6 +24,7 @@ function Profile({ setShowNav }) {
       <div className="container">
         <div className="userInfo">
           <div className="title">info</div>
+          {edit && <Edit />}
           <div className="content">
             {user?.image ? (
               <div className="img">
