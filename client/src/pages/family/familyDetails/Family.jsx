@@ -43,10 +43,11 @@ function Family({ setShowNav }) {
     }
   }, [message, error]);
 
-  const removeHandler = (idNumber) => {
+  const removeHandler = (member) => {
+    console.log({ member });
     const ids = {
       familyId: family?._id,
-      idNumber,
+      idNumber: member.idNumber,
     };
     removeMember(ids);
   };
@@ -55,6 +56,7 @@ function Family({ setShowNav }) {
   useEffect(() => {
     !user?.token && navigate("/login");
   }, [user]);
+  console.log("user_id", user._id);
   return (
     <div>
       <div className="family page">
@@ -80,7 +82,15 @@ function Family({ setShowNav }) {
                           {family.parent === user?._id && (
                             <div
                               className="trash"
-                              onClick={() => removeHandler(member.idNumber)}
+                              onClick={() => removeHandler(member)}
+                            >
+                              <FaTrash />
+                            </div>
+                          )}
+                          {user.idNumber === member.idNumber && (
+                            <div
+                              className="trash"
+                              onClick={() => removeHandler(member)}
                             >
                               <FaTrash />
                             </div>
