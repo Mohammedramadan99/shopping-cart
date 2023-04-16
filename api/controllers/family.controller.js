@@ -21,7 +21,7 @@ export const createFamily = async (req, res, next) => {
 export const getFamily = async (req, res) => {
   try {
     const parent = req.user; // Assuming the parent user is authenticated
-    console.log({ parent });
+
     // const family = await Family.findOne({ parent }).populate("cart.product");
     const family = await Family.findOne({ parent }).populate("cart.product");
     if (!family) {
@@ -31,7 +31,6 @@ export const getFamily = async (req, res) => {
         "cart.product"
       );
 
-      console.log(user);
       if (!user)
         return res.status(404).json({ error: "you don't have a family" });
 

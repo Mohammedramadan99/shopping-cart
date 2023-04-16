@@ -12,9 +12,8 @@ const router = express.Router();
 
 router.post("/", createSection);
 router.get("/:familyId", isAuth, getFamilySections);
-router.delete("/:sectionId", isAuth, removeSection);
+router.delete("/:sectionId/:familyId", isAuth, removeSection);
 router.get("/section/:sectionId", isAuth, getSection);
-
 router.get("/:sectionId/products", getProducts);
 
 export default router;

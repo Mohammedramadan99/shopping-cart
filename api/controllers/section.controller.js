@@ -1,5 +1,6 @@
 import Section from "../models/section.model.js";
 import Product from "../models/product.model.js";
+import Family from "../models/family.model.js";
 
 export const createSection = async (req, res, next) => {
   try {
@@ -51,11 +52,39 @@ export const getProducts = async (req, res) => {
 export const removeSection = async (req, res) => {
   try {
     const id = req.params.sectionId;
+    const familyId = req.params.familyId;
     const section = await Section.findOneAndDelete({ id });
+    // console.log({ section });
     if (!section) {
       res.status(404).json({ message: "section not found" });
       return;
     }
+    const family = await Family.findById(familyId).populate("cart.product");
+    console.log("family", family.cart);
+
+    // remove section products from the family cart
+
+    // const cartIndex = family.cart.findIndex(
+    //   (cartItem) => cartItem.product?.sectionId.toString() === id
+    // );
+    console.log("familtt", family.cart);
+    // console.log({ cartIndex });
+    // if (cartIndex !== -1) {
+    //   family.cart.splice(cartIndex, 1);
+    //   await family.save();
+    // }
+    // Remove all products in the section from the family's cart
+    const cart = family.cart
+      .map((item) => {
+        if (item.product?.sectionId.toString() !== id) {
+          return item;
+        }
+      })
+      .filter(Boolean);
+    console.log({ cart });
+    family.cart = cart;
+    await family.save();
+
     res.status(200).json({ message: "section removed" });
     return;
   } catch (error) {
