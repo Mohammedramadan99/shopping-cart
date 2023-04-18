@@ -35,13 +35,19 @@ export const getFamilySections = async (req, res, next) => {
       return res.status(404).json({ error: "Sections not found" });
     }
     // const products = await Product.find({ sectionId: section[0]._id });
+
     // // Calculate the count of products in the section
+
     // const productCount = products.length;
+
     // // Calculate the total price of all products in the section
+
     // const totalPrice = products.reduce((total, product) => {
     //   return total + product.price;
     // }, 0);
+
     // Calculate count and total price of products for each section
+
     const sectionsWithStats = await Promise.all(
       sections.map(async (section) => {
         // Fetch products for the section from the database
@@ -55,14 +61,14 @@ export const getFamilySections = async (req, res, next) => {
 
         // Create a new object with section data and stats
         return {
-          sectionId: section,
+          section,
           sectionName: section.name,
           productCount,
           totalPrice,
         };
       })
     );
-    res.json({ sections, sectionsWithStats });
+    res.json({ sections: sectionsWithStats });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

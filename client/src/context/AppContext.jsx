@@ -1,9 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-export const AuthContext = createContext();
+export const AppContext = createContext();
 
 const URL = "http://localhost:3001";
-const AuthContextProvider = ({ children }) => {
+const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("userInfo"))
       ? JSON.parse(localStorage.getItem("userInfo"))
@@ -310,7 +310,7 @@ const AuthContextProvider = ({ children }) => {
     // Add new family to server
 
     // const { data } = axios.post(`${URL}/api/auth/register`, { ...user });
-
+    console.log({ product });
     axios
       .delete(`${URL}/api/products/${product?._id}`, {
         headers: {
@@ -405,7 +405,7 @@ const AuthContextProvider = ({ children }) => {
     reset,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
-export default AuthContextProvider;
+export default AppContextProvider;

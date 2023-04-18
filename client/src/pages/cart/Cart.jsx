@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { AppContext } from "../../context/AppContext";
 import { FaTrash } from "react-icons/fa";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-
+import "./Cart.scss";
 function Cart({ setShowNav }) {
   const navigate = useNavigate();
   setShowNav(true);
@@ -19,26 +18,43 @@ function Cart({ setShowNav }) {
     removeFromCart,
     message,
     reset,
-  } = useContext(AuthContext);
+  } = useContext(AppContext);
   useEffect(() => {
     getFamily();
   }, []);
-  useEffect(() => {
-    if (message) {
-      toast.success(message);
-      reset();
-    }
-  }, [message]);
 
   console.log({ family });
   useEffect(() => {
     !user?.token && navigate("/login");
   }, [user]);
+  // Function to calculate the total price of products in the cart
+  const calculateCartTotal = (cart) => {
+    let total = 0;
+
+    // Loop through each item in the cart and calculate total price
+    cart.forEach((item) => {
+      total += item.product.price * item.quantity;
+    });
+
+    return total;
+  };
+
+  // Call the function and get the total price
+  const totalPrice = calculateCartTotal(family.cart);
+  const count = family?.cart?.length;
+
   return (
     <div className="page section">
       <div className="container">
         <div className="header">
           <div className="sectionName">cart</div>
+          <div className="total">
+            <span>total</span>${totalPrice}
+          </div>
+          <div className="count">
+            <span>count</span>
+            {count}
+          </div>
         </div>
         <h3>{family?.familyName}'s cart</h3>
         <div className={`products ${products.length < 3 ? "fixed-width" : ""}`}>

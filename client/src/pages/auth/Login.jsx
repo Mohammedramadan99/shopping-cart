@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Auth.scss";
-import { AuthContext } from "../../context/AuthContext";
+import { AppContext } from "../../context/AppContext";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -19,7 +19,7 @@ function Login({ setShowNav }) {
     message,
     user: userInfo,
     reset,
-  } = useContext(AuthContext);
+  } = useContext(AppContext);
   console.log({ userInfo });
   const handleChange = (e) => {
     setUser((prev) => {

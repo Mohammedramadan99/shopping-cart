@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./AddMember.scss";
-import { AuthContext } from "../../../context/AuthContext";
+import { AppContext } from "../../../context/AppContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 function AddMember() {
   const navigate = useNavigate();
   const { user, getFamily, family, addMember, error, reset, message } =
-    useContext(AuthContext);
+    useContext(AppContext);
   const [email, setEmail] = useState("");
   const [idNumber, setIdNumber] = useState("");
   useEffect(() => {

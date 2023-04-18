@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
-import { AuthContext } from "../../context/AuthContext";
+import { AppContext } from "../../context/AppContext";
 
 import { AiOutlineClose } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import familyModel from "../../../../api/models/family.model";
 
 function Navbar() {
-  const { family, user, logout } = useContext(AuthContext);
+  const { family, user, logout } = useContext(AppContext);
   const [showNav, setShowNav] = useState(false);
   return (
     <div className={`navbar ${showNav ? "md-screens" : ""}`}>

@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext.jsx";
+import { AppContext } from "../../context/AppContext.jsx";
 import { Link } from "react-router-dom";
 import "./Home.scss";
 
 function Home({ setShowNav, setShowFooter }) {
   setShowNav(false);
   setShowFooter(false);
-  const { families, user, logout } = useContext(AuthContext);
+  const { families, user, logout } = useContext(AppContext);
   console.log(user);
   return (
     <div className="home">

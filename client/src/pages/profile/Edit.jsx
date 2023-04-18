@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import { AppContext } from "../../context/AppContext";
 
 function Edit({ setEdit }) {
   const navigate = useNavigate();
-  const { register, error, message, reset } = useContext(AuthContext);
+  const { register, error, message, reset } = useContext(AppContext);
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",

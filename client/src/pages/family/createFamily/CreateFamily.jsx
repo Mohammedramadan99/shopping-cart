@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../context/AuthContext";
+import { AppContext } from "../../../context/AppContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./CreateFamily.scss";
 function CreateFamily({ setShowNav }) {
   const navigate = useNavigate();
-  const { user, createFamily, message, reset, error } = useContext(AuthContext);
+  const { user, createFamily, message, reset, error } = useContext(AppContext);
   setShowNav(true);
   const [familyName, setFamilyName] = useState("");
 

@@ -19,13 +19,12 @@ $box-padding: 20px;
       background-color: #f4f4f4;
       //   border: 2px solid $primary_color;
       //   padding: 20px;
-      .header {
+      & > .header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         color: #fff;
         background-color: $secondary_color;
-        border-bottom: 3px solid #fff;
         padding: $box-padding;
         .add {
           font-size: 20px;
@@ -71,6 +70,22 @@ $box-padding: 20px;
       }
     }
     .rooms_box {
+      background-color: transparent !important;
+      .table {
+        .header {
+          // border: 1px solid #000;
+          text-transform: capitalize;
+          display: flex;
+          border-inline: 1px solid;
+          border-bottom: 1px solid;
+          .col {
+            flex: 1;
+            padding: 10px 20px;
+            font-weight: 600;
+            // color: ;
+          }
+        }
+      }
       .rooms {
         transition: $main_speed;
         display: flex;
@@ -79,13 +94,18 @@ $box-padding: 20px;
         flex-direction: column;
         .room {
           width: 100%;
-          padding: 20px;
+          // padding: 20px;
           transition: $main_speed;
           display: flex;
           align-items: center;
           justify-content: space-between;
           font-weight: 700;
           color: #666;
+          background-color: #f4f4f4;
+          .item {
+            flex: 1;
+            padding: 20px;
+          }
           &:hover {
             background-color: #fff;
           }

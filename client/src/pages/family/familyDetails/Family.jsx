@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { AuthContext } from "../../../context/AuthContext";
+import { AppContext } from "../../../context/AppContext";
 import "./Family.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -18,7 +18,7 @@ function Family({ setShowNav }) {
     error,
     reset,
     removeMember,
-  } = useContext(AuthContext);
+  } = useContext(AppContext);
   useEffect(() => {
     getFamily();
   }, []);
@@ -33,15 +33,11 @@ function Family({ setShowNav }) {
     }
   }, [family?._id, user.token, products]);
   useEffect(() => {
-    if (message) {
-      toast.success(message);
-      reset();
-    }
     if (error) {
       toast.error(error);
       reset();
     }
-  }, [message, error]);
+  }, [error]);
 
   const removeHandler = (member) => {
     console.log({ member });
@@ -89,14 +85,15 @@ function Family({ setShowNav }) {
                               <FaTrash />
                             </div>
                           )}
-                          {user.idNumber === member.idNumber && (
-                            <div
-                              className="trash"
-                              onClick={() => removeHandler(member)}
-                            >
-                              <FaTrash />
-                            </div>
-                          )}
+                          {user.idNumber === member.idNumber &&
+                            family.parent !== user?._id && (
+                              <div
+                                className="trash"
+                                onClick={() => removeHandler(member)}
+                              >
+                                <FaTrash />
+                              </div>
+                            )}
                         </div>
                       </div>
                     ))
@@ -112,11 +109,31 @@ function Family({ setShowNav }) {
                     +
                   </Link>
                 </div>
+                <div className="table">
+                  <div className="header">
+                    <div className="col col_1">section name</div>
+                    <div className="col col_2"> products </div>
+                    <div className="col col_3">total price</div>
+                  </div>
+                </div>
                 <div className="rooms">
                   {sections?.length > 0 ? (
-                    sections?.map((sec) => (
-                      <Link to={`/section/${sec?._id}`} className="room">
-                        <div className="name">{sec?.sectionName}</div>
+                    sections?.map((item) => (
+                      <Link
+                        to={`/section/${item?.section?._id}`}
+                        className="room"
+                      >
+                        <div className="item name">
+                          {item?.section?.sectionName}
+                        </div>
+                        <div className="item productsCount">
+                          {" "}
+                          {item?.productCount}{" "}
+                        </div>
+                        <div className="item totalPrice">
+                          {" "}
+                          ${item?.totalPrice}{" "}
+                        </div>
                       </Link>
                     ))
                   ) : (

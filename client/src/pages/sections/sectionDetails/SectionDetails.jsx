@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { AuthContext } from "../../../context/AuthContext";
+import { AppContext } from "../../../context/AppContext";
 import "./SectionDetails.scss";
 import { FaTrash, FaCartPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -20,7 +20,7 @@ function SectionDetails() {
     message,
     reset,
     cart,
-  } = useContext(AuthContext);
+  } = useContext(AppContext);
 
   const { id } = useParams();
   console.log({ id });
@@ -38,13 +38,6 @@ function SectionDetails() {
       getProducts(section?._id);
     }
   }, [section?._id]);
-
-  useEffect(() => {
-    if (message) {
-      // toast.success(message);
-    }
-    reset();
-  }, [message]);
 
   return (
     <div className="page section">

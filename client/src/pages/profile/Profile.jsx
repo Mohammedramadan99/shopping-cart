@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import "./Profile.scss";
-import { AuthContext } from "../../context/AuthContext";
+import { AppContext } from "../../context/AppContext";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { useState } from "react";
@@ -9,7 +9,7 @@ function Profile({ setShowNav }) {
   const navigate = useNavigate();
   const [edit, setEdit] = useState(false);
   setShowNav(true);
-  const { user, family, getFamily, removeFamily } = useContext(AuthContext);
+  const { user, family, getFamily, removeFamily } = useContext(AppContext);
   console.log({ family });
 
   useEffect(() => {

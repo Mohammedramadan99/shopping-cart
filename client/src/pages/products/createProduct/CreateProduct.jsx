@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../context/AuthContext";
+import { AppContext } from "../../../context/AppContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./CreateProduct.scss";
@@ -15,7 +15,7 @@ function CreateProduct() {
     createSection,
     addProduct,
     reset,
-  } = useContext(AuthContext);
+  } = useContext(AppContext);
   const { id } = useParams();
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState(null);

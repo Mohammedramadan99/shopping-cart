@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../context/AuthContext";
+import { AppContext } from "../../../context/AppContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 function CreateSection() {
   const { user, getFamily, family, createSection, message, error, reset } =
-    useContext(AuthContext);
+    useContext(AppContext);
   const [roomName, setRoomName] = useState("");
   useEffect(() => {
     getFamily();

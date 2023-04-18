@@ -164,7 +164,7 @@ export const addToCart = async (req, res) => {
     }
 
     const existingCartItemIndex = family.cart.findIndex(
-      (item) => item.product._id.toString() === productId
+      (item) => item.product?._id.toString() === productId
     );
     if (existingCartItemIndex !== -1) {
       family.cart[existingCartItemIndex].quantity += quantity || 1;

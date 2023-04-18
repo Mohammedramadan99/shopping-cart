@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import "./Auth.scss";
-import { AuthContext } from "../../context/AuthContext";
+import { AppContext } from "../../context/AppContext";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -17,7 +17,7 @@ function Register({ setShowNav }) {
   });
   const [image, setImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
-  const { register, error, message, reset } = useContext(AuthContext);
+  const { register, error, message, reset } = useContext(AppContext);
 
   const handleChange = (e) => {
     setUser((prev) => {
