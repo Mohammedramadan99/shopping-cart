@@ -253,7 +253,7 @@ const AuthContextProvider = ({ children }) => {
       })
       .then((res) => {
         console.log(res.data);
-        setSections(res?.data);
+        setSections(res?.data.sections);
         setError("");
       })
       .catch((error) => {

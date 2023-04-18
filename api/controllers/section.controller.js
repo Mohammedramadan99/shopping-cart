@@ -45,7 +45,7 @@ export const getFamilySections = async (req, res, next) => {
     const sectionsWithStats = await Promise.all(
       sections.map(async (section) => {
         // Fetch products for the section from the database
-        const products = await Product.find({ section: section._id });
+        const products = await Product.find({ sectionId: section._id });
         // Calculate the count of products in the section
         const productCount = products.length;
         // Calculate the total price of all products in the section
@@ -55,7 +55,7 @@ export const getFamilySections = async (req, res, next) => {
 
         // Create a new object with section data and stats
         return {
-          sectionId: section._id,
+          sectionId: section,
           sectionName: section.name,
           productCount,
           totalPrice,
