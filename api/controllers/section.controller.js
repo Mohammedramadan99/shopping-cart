@@ -25,13 +25,44 @@ export const getSection = async (req, res, next) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 export const getFamilySections = async (req, res, next) => {
   try {
-    const section = await Section.find({ familyId: req.params.familyId });
-    if (!section) {
-      return res.status(404).json({ error: "Section not found" });
+    const sections = await Section.find({
+      familyId: req.params.familyId,
+    });
+    if (!sections) {
+      return res.status(404).json({ error: "Sections not found" });
     }
-    res.json(section);
+    // const products = await Product.find({ sectionId: section[0]._id });
+    // // Calculate the count of products in the section
+    // const productCount = products.length;
+    // // Calculate the total price of all products in the section
+    // const totalPrice = products.reduce((total, product) => {
+    //   return total + product.price;
+    // }, 0);
+    // Calculate count and total price of products for each section
+    const sectionsWithStats = await Promise.all(
+      sections.map(async (section) => {
+        // Fetch products for the section from the database
+        const products = await Product.find({ section: section._id });
+        // Calculate the count of products in the section
+        const productCount = products.length;
+        // Calculate the total price of all products in the section
+        const totalPrice = products.reduce((total, product) => {
+          return total + product.price;
+        }, 0);
+
+        // Create a new object with section data and stats
+        return {
+          sectionId: section._id,
+          sectionName: section.name,
+          productCount,
+          totalPrice,
+        };
+      })
+    );
+    res.json({ sections, sectionsWithStats });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -48,7 +79,6 @@ export const getProducts = async (req, res) => {
   }
 };
 
-//
 export const removeSection = async (req, res) => {
   try {
     const id = req.params.sectionId;

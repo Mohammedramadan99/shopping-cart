@@ -18,3 +18,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 // remove a family
 // home links
 // add to cart
+// rename context api file to appContent instead of Auth context
