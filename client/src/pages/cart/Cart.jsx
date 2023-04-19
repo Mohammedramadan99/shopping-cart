@@ -32,7 +32,7 @@ function Cart({ setShowNav }) {
     let total = 0;
 
     // Loop through each item in the cart and calculate total price
-    cart.forEach((item) => {
+    cart?.forEach((item) => {
       total += item.product.price * item.quantity;
     });
 
@@ -40,10 +40,25 @@ function Cart({ setShowNav }) {
   };
 
   // Call the function and get the total price
-  const totalPrice = calculateCartTotal(family.cart);
+  const totalPrice = calculateCartTotal(family?.cart);
   const count = family?.cart?.length;
 
-  return (
+  return !family ? (
+    <div
+      className="note"
+      style={{
+        textAlign: "center",
+        padding: "20px",
+        textTransform: "capitalize",
+      }}
+    >
+      you don't have a family
+      <Link to="/family/create" style={{ textDecoration: "underline" }}>
+        {" "}
+        let's create one
+      </Link>
+    </div>
+  ) : (
     <div className="page section">
       <div className="container">
         <div className="header">

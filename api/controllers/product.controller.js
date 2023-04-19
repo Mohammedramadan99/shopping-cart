@@ -1,12 +1,18 @@
 import Product from "../models/product.model.js";
 import cloudinary from "cloudinary";
+import dotenv from "dotenv";
+// cloudinary.config({
+//   cloud_name: "dtmjc8y9z",
+//   api_key: "379966828288349",
+//   api_secret: "a41LSvU3XXAJuQOLxorhOVFPauw",
+// });
+dotenv.config();
 
 cloudinary.config({
-  cloud_name: "dtmjc8y9z",
-  api_key: "379966828288349",
-  api_secret: "a41LSvU3XXAJuQOLxorhOVFPauw",
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
 export const createProduct = async (req, res, next) => {
   try {
     const { productName, sectionId, price, image } = req.body;
